@@ -1,0 +1,9 @@
+Login01 - Input: Reading the user account file and get the account info
+
+Login02 - Input: The program should ask for the users username and password
+
+Login03 - Input: After successful login, loads in all available games and allows the user to make any transaction
+
+Login 04 - Input: The user cannot make any purchases before login
+
+Login05 - Input: The user should have to login if they have login previously
