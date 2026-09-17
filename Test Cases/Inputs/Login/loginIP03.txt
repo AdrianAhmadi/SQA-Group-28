@@ -1,0 +1,1 @@
+Input: After successful login, loads in all available games and allows the user to make any transaction

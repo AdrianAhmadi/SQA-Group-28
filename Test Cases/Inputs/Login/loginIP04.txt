@@ -1,0 +1,1 @@
+Input: The user cannot make any purchases before login
