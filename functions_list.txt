@@ -1,0 +1,23 @@
+1 - login():
+    Allow the user to start a session
+
+2 - logout():
+    Allow the user to end a session
+
+3 - create():
+    Allow the user to create an account
+
+4 - delete():
+    Allow the user to delete their account
+
+5 - sell():
+    Allow the user to put up a game for sale
+
+6 - buy():
+    Allow the user to buy a game on sale
+
+7 - refund():
+    Allow the user to recive credit from a transaction
+
+8 - addCredit():
+    Allow the user to add funds for a purchase
