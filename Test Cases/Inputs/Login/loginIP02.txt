@@ -1,1 +1,0 @@
-Input: The program should ask for the users username and password

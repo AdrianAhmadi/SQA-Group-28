@@ -1,1 +1,0 @@
-Input: Reading the user account file and get the account info

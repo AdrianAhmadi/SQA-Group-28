@@ -1,9 +1,73 @@
-Login01 - Input: Reading the user account file and get the account info
+# Login Test Cases:
 
-Login02 - Input: The program should ask for the users username and password
+Login01 - Input: User tries to wants to make a transation before a login
 
-Login03 - Input: After successful login, loads in all available games and allows the user to make any transaction
+Login02 - Input: user tries to login after already logging in
 
-Login 04 - Input: The user cannot make any purchases before login
+Login03 - Input: user tries to make a privileged transaction (modifying the system) after login
 
-Login05 - Input: The user should have to login if they have login previously
+Login 04 - Input: admin tries to make a privileged transaction after admin login
+
+# Logout Test Cases:
+
+Logout01 - Input: user tries to logout after logging in
+
+Logout02 - Input: user tries to make transation that is not logging in after a logout
+
+# Create Test Cases:
+
+Create01 - Input: admin tries to use Create
+
+Create02 - Input: user tries to use Create
+
+Create03 - Input: a new user tries to make a username that has 16 or more characters
+
+Create04 - Input: a new user tries to have the same username as another user
+
+Create05 - Input: a user tries to put a credit amount of $999,999 or greater
+
+# Delete Test Cases:
+
+Delete01 - Input: a user tries to use Delete
+
+Delete02 - Input: an admin tries to Delete
+
+Delete03 - Input: a deleted user tries to make a transaction
+
+Delete04 - Input: a user tries to delete themself
+
+Delete05 - Input: a user tries to delete a non-exsisting user
+
+# Sell Test Cases:
+
+Sell01 - Input: A standard sell account tries to use sell
+
+Sell02 - Input: a user tries to set a price greater than 999.99
+
+Sell03 - Input: a user tries to give their game a name of 26 characters or over
+
+Sell04 - Input: A user tries to give their game a name that already exsists in the system
+
+Sell05 - Input: a user tries to make multiple transactions on a game on the same session
+
+# Buy Test Cases:
+
+Buy01 - Input: A standard sell account tries to use Buy
+
+Buy02 - Input: a user buys a game to add to their collection
+
+Buy03 - Input: a user tries to buy a game with insuffeciant funds
+
+Buy04 - Input: a user tries to buy the same game twice
+
+# Refund Test Cases:
+
+Refund01 - Input: a seller tries to refund a non-exsistant buyer
+
+Refund02 - Input: a buyer requests a refund from a non-exsistant seller
+
+# AddCredit Test Cases:
+
+AddCredit01 - Input: an admin tries to add credit to a non-exsisting user
+
+AddCredit02 - Input: a user tries to add more than $1000 to an account
