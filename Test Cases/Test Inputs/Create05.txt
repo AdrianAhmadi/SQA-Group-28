@@ -1,0 +1,5 @@
+login
+admin
+create Moneybags99999
+buy-standard
+1000000.00

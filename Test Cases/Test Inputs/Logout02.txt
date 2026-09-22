@@ -1,0 +1,4 @@
+login
+customer1
+logout
+buy Dark Souls

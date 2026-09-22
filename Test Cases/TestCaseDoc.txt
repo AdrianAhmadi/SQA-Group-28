@@ -6,13 +6,15 @@ Login02 - Input: user tries to login after already logging in
 
 Login03 - Input: user tries to make a privileged transaction (modifying the system) after login
 
-Login 04 - Input: admin tries to make a privileged transaction after admin login
+Login04 - Input: admin tries to make a privileged transaction after admin login
 
 # Logout Test Cases:
 
 Logout01 - Input: user tries to logout after logging in
 
 Logout02 - Input: user tries to make transation that is not logging in after a logout
+
+Logout03 - Input: user tries to log out when already logged out
 
 # Create Test Cases:
 
@@ -26,13 +28,15 @@ Create04 - Input: a new user tries to have the same username as another user
 
 Create05 - Input: a user tries to put a credit amount of $999,999 or greater
 
+Create06 - Input: a user inputs a credit value that is not a number
+
 # Delete Test Cases:
 
 Delete01 - Input: a user tries to use Delete
 
 Delete02 - Input: an admin tries to Delete
 
-Delete03 - Input: a deleted user tries to make a transaction
+Delete03 - Input: a deleted user tries to make a transaction.
 
 Delete04 - Input: a user tries to delete themself
 

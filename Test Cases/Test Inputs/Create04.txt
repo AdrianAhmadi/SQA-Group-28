@@ -1,0 +1,6 @@
+login
+admin
+create SameName01
+buy-standard
+0
+create SameName01
