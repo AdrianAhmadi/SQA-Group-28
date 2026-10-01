@@ -1,0 +1,9 @@
+login
+User001
+buy
+Game001
+Seller001
+buy
+Game001
+Seller001
+logout
