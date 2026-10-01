@@ -1,3 +1,3 @@
 login as seller
 seller puts game up for sale
-seller tries to buy his own game
+user tries to buy game in the same session
