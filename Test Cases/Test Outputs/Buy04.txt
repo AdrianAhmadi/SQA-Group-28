@@ -1,0 +1,1 @@
+Error: Game already present in collection

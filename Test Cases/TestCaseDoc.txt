@@ -1,8 +1,10 @@
 # Login Test Cases:
 
 Login01 - Input: User tries to wants to make a transation before a login
+          Output: unsuccessful transaction, user is not logged in
 
 Login02 - Input: user tries to login after already logging in
+          Output: unsuccessful login, user is already logged in
 
 Login03 - Input: user tries to make a privileged transaction (modifying the system) after login
 
@@ -70,8 +72,14 @@ Refund01 - Input: a seller tries to refund a non-exsistant buyer
 
 Refund02 - Input: a buyer requests a refund from a non-exsistant seller
 
+Refund03 - Input: a seller refunds an exsistant buyer
+
+Refund04 - Input: a buyer requestes a refund for an exsistant seller
+
 # AddCredit Test Cases:
 
 AddCredit01 - Input: an admin tries to add credit to a non-exsisting user
 
 AddCredit02 - Input: a user tries to add more than $1000 to an account
+
+AddCredit03 - Input: an admin tries to add credit to an exsistant user
