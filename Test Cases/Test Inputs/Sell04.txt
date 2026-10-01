@@ -1,8 +1,0 @@
-login as seller
-
-tries to put game up for sale
-sets game name to game1
-puts game1 up for sale
-
-tries to put another game for sale
-sets new games name to game1

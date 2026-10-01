@@ -1,2 +1,0 @@
-user login
-tries to buy $30 game with $20 of funds

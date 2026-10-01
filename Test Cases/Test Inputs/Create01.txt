@@ -1,4 +1,0 @@
-login
-admin
-create NewAccount123
-buy-standard
