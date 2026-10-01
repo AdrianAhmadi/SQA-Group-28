@@ -1,0 +1,4 @@
+user login
+buys a game
+adds game to collection
+1

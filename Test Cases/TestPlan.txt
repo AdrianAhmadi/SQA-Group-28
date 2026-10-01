@@ -1,0 +1,7 @@
+Organization: Our test cases will be stored in our Test Cases directory in seperate folders of inputs and outputs.
+
+How we will run our tests: First fill out the user, game, sellers, and admin information into a text file in the proper format.
+Then program the front end in C++ to set up the store front to run commands to add users, sell games, etc. 
+
+Output Orginization: We will have our test cases written in C++ so that we can run our test cases and get their output on the console.
+And store the test scripts in their own test folder.

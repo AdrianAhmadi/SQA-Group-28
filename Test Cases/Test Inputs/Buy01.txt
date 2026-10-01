@@ -1,0 +1,3 @@
+seller login
+tries to buy a game
+0
