@@ -1,0 +1,9 @@
+login
+Admin001
+create
+NewUser01
+FS
+create
+NewUser01
+BS
+logout
