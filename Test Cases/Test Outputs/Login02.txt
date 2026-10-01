@@ -1,0 +1,1 @@
+Error: User is already logged in on this session.
