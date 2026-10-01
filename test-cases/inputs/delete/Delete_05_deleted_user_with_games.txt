@@ -1,0 +1,8 @@
+login
+Admin001
+delete
+Seller001
+buy
+Game001
+Seller001
+logout
