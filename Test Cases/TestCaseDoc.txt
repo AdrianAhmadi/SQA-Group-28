@@ -1,85 +1,117 @@
 # Login Test Cases:
 
-Login01 - Input: User tries to wants to make a transation before a login
-          Output: unsuccessful transaction, user is not logged in
+Login01 -   Input: User tries to wants to make a transation before a login
+            Output: unsuccessful transaction, user is not logged in
 
-Login02 - Input: user tries to login after already logging in
-          Output: unsuccessful login, user is already logged in
+Login02 -   Input: user tries to login after already logging in
+            Output: unsuccessful login, user is already logged in
 
-Login03 - Input: user tries to make a privileged transaction (modifying the system) after login
+Login03 -   Input: user tries to make a privileged transaction (modifying the system) after login
+            Output: unsuccessful transaction, must be privileged user
 
-Login04 - Input: admin tries to make a privileged transaction after admin login
+Login04 -   Input: admin tries to make a privileged transaction after admin login
+            Output: system recognizes privileged user and permits transaction
 
 # Logout Test Cases:
 
-Logout01 - Input: user tries to logout after logging in
+Logout01 -  Input: user tries to logout after logging in
+            Output: user successfully logs out
 
-Logout02 - Input: user tries to make transation that is not logging in after a logout
+Logout02 -  Input: user tries to make transation that is not logging in after a logout
+            Output: unsuccessful, no user logged in
 
-Logout03 - Input: user tries to log out when already logged out
+Logout03 -  Input: user tries to log out when already logged out
+            Output: unsuccessful, no user logged in
 
 # Create Test Cases:
 
-Create01 - Input: admin tries to use Create
+Create01 -  Input: admin tries to use Create
+            Output: success, admin has permissions
 
-Create02 - Input: user tries to use Create
+Create02 -  Input: user tries to use Create
+            Output: unsuccessful, user does not have permissions for this action
 
-Create03 - Input: a new user tries to make a username that has 16 or more characters
+Create03 -  Input: a new user tries to make a username that has 16 or more characters
+            Output: unsuccessful, username must be 15 or fewer characters
 
-Create04 - Input: a new user tries to have the same username as another user
+Create04 -  Input: a new user tries to have the same username as another 
+            Output: unsuccessful, username must be unique
 
-Create05 - Input: a user tries to put a credit amount of $999,999 or greater
+Create05 -  Input: a user tries to put a credit amount of $999,999.99 or greater
+            Output: unsuccessful, credit limit for an account is 999,999.99
 
-Create06 - Input: a user inputs a credit value that is not a number
+Create06 -  Input: a user inputs a credit value that is not a number
+            Output: unsuccessful transaction, input must be a number
 
 # Delete Test Cases:
 
-Delete01 - Input: a user tries to use Delete
+Delete01 -  Input: a user tries to use Delete
+            Output: unsuccessful, insufficient permissions for this action
 
-Delete02 - Input: an admin tries to Delete
+Delete02 -  Input: an admin tries to Delete
+            Output: successfully deletes user
 
-Delete03 - Input: a deleted user tries to make a transaction.
+Delete03 -  Input: a deleted user tries to make a transaction.
+            Output: unsuccessful transaction, user does not exist
 
-Delete04 - Input: a user tries to delete themself
+Delete04 -  Input: a user tries to delete themself
+            Output: unsuccessful, user cannot delete themself
 
-Delete05 - Input: a user tries to delete a non-exsisting user
+Delete05 -  Input: a user tries to delete a non-existing user
+            Output: unsuccessful, user does not exist
 
 # Sell Test Cases:
 
-Sell01 - Input: A standard sell account tries to use sell
+Sell01 -    Input: A standard sell account tries to use sell
+            Output: item successfully listed for sale
 
-Sell02 - Input: a user tries to set a price greater than 999.99
+Sell02 -    Input: a user tries to set a price greater than 999.99
+            Output: unsuccessful transaction, price cannot be greater than 999.99
 
-Sell03 - Input: a user tries to give their game a name of 26 characters or over
+Sell03 -    Input: a user tries to give their game a name of 26 characters or over
+            Output: unsuccessful, game title must be fewer than 26 characters
 
-Sell04 - Input: A user tries to give their game a name that already exsists in the system
+Sell04 -    Input: A user tries to give their game a name that already exists in the system
+            Output: unsuccessful transaction, games must have unique titles
 
-Sell05 - Input: a user tries to make multiple transactions on a game on the same session
+Sell05 -    Input: a user tries to make multiple transactions on a game on the same session
+            Output: unsuccessful transaction, user is not permitted to make multiple transactions on the same game in one session
 
 # Buy Test Cases:
 
-Buy01 - Input: A standard sell account tries to use Buy
+Buy01 -     Input: A standard sell account tries to use Buy
+            Output: unsuccessful transaction, standard-sell accounts cannot buy games
 
-Buy02 - Input: a user buys a game to add to their collection
+Buy02 -     Input: a user buys a game to add to their collection
+            Output: successful transaction, game added to collection
 
-Buy03 - Input: a user tries to buy a game with insuffeciant funds
+Buy03 -     Input: a user tries to buy a game with insufficient funds
+            Output: unsuccessful transaction, insufficient funds
 
-Buy04 - Input: a user tries to buy the same game twice
+Buy04 -     Input: a user tries to buy the same game twice
+            Output: unsuccessful transaction, game already exists in collection
 
 # Refund Test Cases:
 
-Refund01 - Input: a seller tries to refund a non-exsistant buyer
+Refund01 -  Input: a seller tries to refund a non-existent buyer
+            Output: unsuccessful, buyer does not exist
 
-Refund02 - Input: a buyer requests a refund from a non-exsistant seller
+Refund02 -  Input: a buyer requests a refund from a non-existent seller
+            Output: unsuccessful transaction, seller does not exist
 
-Refund03 - Input: a seller refunds an exsistant buyer
+Refund03 -  Input: a seller refunds an existing buyer
+            Output: refund accepted, buyer is refunded credit and game is removed from their collection
 
-Refund04 - Input: a buyer requestes a refund for an exsistant seller
+Refund04 -  Input: a buyer requests a refund for an existing seller
+            Output: refund request sent to seller, awaiting confirmation
 
 # AddCredit Test Cases:
 
-AddCredit01 - Input: an admin tries to add credit to a non-exsisting user
+AddCredit01 -   Input: an admin tries to add credit to a non-existent user
+                Output: unsuccessful transaction, user does not exist
 
-AddCredit02 - Input: a user tries to add more than $1000 to an account
+AddCredit02 -   Input: a user tries to add more than $1000 to an account
+                Output: unsuccessful transaction, user limited to 999.99 in credit per transaction
 
-AddCredit03 - Input: an admin tries to add credit to an exsistant user
+AddCredit03 -   Input: an admin tries to add credit to an existing user
+                Output: transaction successful, credit added to user
