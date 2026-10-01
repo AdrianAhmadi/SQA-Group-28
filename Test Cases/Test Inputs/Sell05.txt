@@ -1,1 +1,3 @@
-***figure it out later
+login as seller
+seller puts game up for sale
+seller tries to buy his own game
