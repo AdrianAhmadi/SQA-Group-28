@@ -1,1 +1,0 @@
-Error: Current user has been deleted.

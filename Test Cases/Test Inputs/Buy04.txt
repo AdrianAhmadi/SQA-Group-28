@@ -1,2 +1,0 @@
-user login
-user tries to buy the same game twice on the same account

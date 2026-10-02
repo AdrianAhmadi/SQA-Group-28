@@ -1,3 +1,0 @@
-login as seller
-tries to put game up for sale
-tries to set game price to $1000

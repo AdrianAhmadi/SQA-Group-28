@@ -1,1 +1,0 @@
-Error: Credit input must be a number

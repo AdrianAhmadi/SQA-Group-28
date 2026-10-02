@@ -1,2 +1,0 @@
-admin login 
-tries give an exsistant user credit

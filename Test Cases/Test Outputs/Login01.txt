@@ -1,1 +1,0 @@
-Error: User must be logged in to preform this function.
