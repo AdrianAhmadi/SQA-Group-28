@@ -1,0 +1,183 @@
+Prompt and output from Gen AI:
+
+Denis Djemilov, 100874947, prompts and output:
+
+
+Prompt 1:
+I have a project where i am building a steam like store front, albeit simpler and just for class, and this is for a software quality assurance course, so the first phase requires a list of test files and their intentions, which we have, but also the actual input and expected output test files, I guess as .txt files. we have some rough outlines for test inputs and outputs, but I am not convinced it is defined in the clearest way. for example, we have this rule for valid login tests, called Login01.txt, with these contents:
+
+buy Dark Souls
+
+we have a simple definition in the documents regarding how we are writing the inputs, but based on the instructions I do not think this is correct. is there a best practices way to write these input test text files?
+
+
+Output 1:
+
+Your instinct is right: buy Dark Souls isn't a good input file, for a few reasons.
+
+It doesn't match the test's purpose. A file named for a valid login should contain a login, and this one never logs in.
+A session has to start with a login. Most storefronts reject everything before login, so this test would be rejected for the wrong reason.
+The command and its details are on one line. If the program asks for one thing at a time, buy and the game name are separate entries.
+There's no logout. A complete session ends with one.
+An input file is a recording of exactly what a person would type during one session, one entry per line, from start to finish. It contains only typed answers, with no labels, comments or prompt text.
+
+A valid login test, Login_01_valid.txt:
+
+login
+User001
+logout
+Line 1 is the transaction word, line 2 answers the username question, and line 3 ends the session.
+
+Make every file a complete session. Start with login and a username, and end with logout.
+Test one behavior per file. When a test fails, its name should tell you what broke. The exception is a test that needs a second step to prove something, like a rejected login followed by a valid one.
+Use one folder per transaction type. Number the files and describe what each checks, like Login_02_invalid_password.txt.
+Reuse the same names everywhere. Pick fixed usernames, like User001, and use them in every test, so every test starts from the same accounts and games. List them once in the test plan.
+Cover the failure paths. For each transaction, test the wrong user type, a missing item, bad input and an empty line, not only the valid case.
+Type the transaction words exactly: login, logout, buy, sell, each on its own line with no extra words.
+Watch stray whitespace. Blank lines and trailing spaces count as input, so include them only in tests that are about them.
+Document intentions separately. Input files can't hold comments, so keep a table of test names and what each one checks.
+
+
+
+Prompt 2:
+Okay nice. I've put together a bunch of test files, and I added a bunch based on some other information from a fake client in a slack channel, which gave more specifics. Now that they are together, I need to figure out how I should format the output text files. here is an example one we wrote in our lab, also for the login valid 01 test input:
+
+User has been logged out.
+
+based on the inputs, I'm assuming there is a specific way of formatting it. however, in this case the actual main project document says that we need daily transaction files. here is the first little exceprt as I'm not entirely sure if this is what its used for:
+
+Daily Transaction File 
+At the end of each session, when the logout transaction is processed, a daily transaction file for the day is written, listing every transaction made in the session.
+Contains variable-length text lines of the form:
+
+XX_UUUUUUUUUUUUUUU_TT_CCCCCCCCC
+
+Where:    
+XX     
+is a two-digit transaction code: 01-create, 02-delete, 06-add credit, 00-end of session
+         UUUUUUUUUUUUUUU    
+is the username (buyer if two users in the transaction)
+        TT            
+is the user type (AA=admin, FS=full-standard, BS=buy-standard, 
+SS=sell-standard)
+        CCCCCCCCC            
+is the available credit
+         _            
+is a space
+
+it outlines a good few more different types of transactions, based on some example file input from earlier in the doc, but am I right to assume for the output files the professor wants us to write in the expected transactions? also, based on this, and a client response in which they say the rejected or incomplete transaction should not appear in the daily transaction file, do we not include anything for failure in the output file?
+
+
+
+Output 2:
+Yes, your assumption is right. The expected output file should hold the daily transaction file the Front End writes at logout, not a description or a terminal message.
+A message like "User has been logged out." is something the program prints to the screen.
+
+What goes in the file
+
+One line per accepted transaction, in the order they happened, and then one final line that closes the session. Each line has a two-digit code, then fields separated by single spaces, with names left-justified and padded with spaces and money padded with leading zeros.
+
+For the valid login test, the only thing the session did was log in and out, so the file has one line, the end-of-session record for the user who was logged in:
+
+00 User001         FS 000100.00
+00 is the end-of-session code.
+User001 is padded with spaces to 15 characters.
+FS is the user type.
+000100.00 is the credit, padded to 9 characters.
+
+Rejected transactions
+
+If the client said thay a rejected or incomplete transaction isn't written to the daiily transaction file, then a test that checks for a rejection has a short expected file, usually only the closing line:
+
+00 User001         FS 000100.00
+
+The empty space between the rejection and the closing line is the evidence. The test passes because nothing else appears.
+
+Extra advice
+
+Decide the unclear fields once. The doc doesn't say whose details the closing line shows, or whether the add credit line shows the balance afterward or the amount added. Pick one reading, apply it to every test, and write it down as an assumption.
+Count the characters. Every field has a fixed width, so a single missing space makes a test fail for the wrong reason. Check the lines against the format in the doc.
+Keep the other record types in mind. login, logout, buy and sell each have their own layout, with different fields. Learn each layout before writing its expected files.
+Match inputs and expected files. Give the expected file the same name as its input in a parallel folder, so every input has exactly one expected file.
+
+
+Prompt 3:
+is the 15 padding on the user for any specific reason?
+
+
+
+Output 3:
+Yes, there is a reason. I padded the username to 15 characters because the excerpt you pasted does. The username field in the format line is written as 15 U characters:
+
+XX_UUUUUUUUUUUUUUU_TT_CCCCCCCCC
+The excerpt also says each U marks a character slot in the username. I filled all 15 slots in every expected line, so User001 (7 characters) gets 8 spaces after it. Fixed-width fields are how the format keeps every record lined up, and the doc's constraints say text fields are left-justified and filled with spaces.
+
+You can check a line by counting its parts:
+
+00 User001         FS 000100.00
+00, then a space (3 characters).
+User001 plus 8 spaces, which is 15 characters, then a space (16 characters).
+FS, then a space (3 characters).
+000100.00, which is 9 characters.
+That makes 31 characters for the whole line. If a tester or the Front End uses a different username width, every expected file would break, so fix 15 as your standard and note it in the test plan.
+
+
+
+Prompt 4:
+okay. I guess before I write everything out, for the TestCaseDoc.txt file, we wrote it like this:
+
+# Login Test Cases:
+
+Login01 - Input: User tries to wants to make a transation before a login
+etc.
+
+But given the input and outputs are different now, is there anything I need to add to each test?
+
+
+
+
+Output 4:
+Yes, but only a little. Your old format has one line per test. Now that there are input and expected files, each test needs these things:
+
+The input file name, so the table says which file each test name refers to.
+A one-line intention in plain English, including what you expect to see in the transaction file when that matters.
+A short assumptions list for every folder of rules. This is the important one. The expected files only make sense if the reader knows who the users are and what rules you followed. Each section should list:
+which users exist, with their type and starting credit
+any rule you chose where the requirements were unclear
+where a rule came from (requirements doc, client, or team decision)
+You don't need an expected column. Put one line at the top of each section saying the expected files have the same names in the matching expected folder.
+
+For a longer document, you can use either a text file or Markdown. Markdown files are easier to read, especially on GitHub, because the tables render properly. A .txt file can't draw a table, so you'd be reading raw lines. You can submit the Markdown (or export it to PDF for Canvas) and keep the .txt as a fallback. Here are both, for Login_01 only.
+
+TestCaseDoc.txt
+
+LOGIN TEST CASES
+
+Input files are in inputs/login/.
+Expected files have the same names in expected/login/.
+
+Assumptions:
+- Users: list every user these tests use, with their type and starting credit.
+- Rules: list any rule the tests depend on, and note where it came from
+  (requirements doc, client answer, or team decision).
+- Rejected transactions are not written to the transaction file.
+
+Test name:  Login_01_valid
+Input file: Login_01_valid.txt
+Intention:  An existing user can log in and log out.
+TestCaseDoc.md
+
+markdown
+## Login
+
+Input files are in `inputs/login/`. Expected files have the same names in `expected/login/`.
+
+**Assumptions**
+- Users: list every user these tests use, with their type and starting credit.
+- Rules: list any rule the tests depend on, and note where it came from (requirements doc, client answer, or team decision).
+- Rejected transactions are not written to the transaction file.
+
+| Test Name | Input File | Intention |
+|---|---|---|
+| Login_01_valid | Login_01_valid.txt | An existing user can log in and log out. |
+Repeat the same layout for each folder: a heading, the folder line, the assumptions for that folder, then the table. Keep the assumptions specific to the folder, as in your pasted document. Your Login section lists the users it needs and the rules it follows, and your Buy section lists the games as well. A reader should never have to guess who a user is or why a result looks the way it does.
