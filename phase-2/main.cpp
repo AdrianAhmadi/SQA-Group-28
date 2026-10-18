@@ -62,7 +62,7 @@ int main(){
                 cout << "Enter your username:";
                 string username = "";
                 cin >> username;
-                User currentUser = login(username);
+                User* currentUser = login(username);
                 session = 1;
                 break;
             } else {
@@ -143,6 +143,7 @@ int main(){
     
 }
 
-User login(string username){
-    return User(username);
+User* login(string username){
+    User* currentUser = new User(username);
+    return currentUser;
 }
