@@ -13,9 +13,18 @@
 
 using namespace std;
 
+
+User* userLogin(string username){
+    //TODO: check the csv file for user permissions, then make switch block to call the appropriate constructor
+    User* currentUser = new User(username);
+    return currentUser;
+}
+
+
+
 int main(){
-    int session = NULL;
-    User current = NULL;
+    bool session = false;
+    User* currentUser = nullptr;
     int choice = -1;
     string accounts = "AccountList.csv";
     string games = "GameList.csv";
@@ -37,7 +46,7 @@ int main(){
         cout << "Main Menu";
         cout << "Enter the number of the option you would like to select:";
         cout << "1. Login";
-        if (session != NULL){
+        if (!session){
             cout << "2. Buy";
             cout << "3. Sell";
             cout << "4. Refund";
@@ -58,76 +67,117 @@ int main(){
 
     switch (choice){
         case 1:
-            if (session == NULL){
+            if (session){
                 cout << "Enter your username:";
                 string username = "";
                 cin >> username;
-                User* currentUser = login(username);
-                session = 1;
+                currentUser = userLogin(username);
+
+                if (currentUser != nullptr){
+                    session = 1;
+                }
                 break;
             } else {
                 cout << "\nError: not a valid input. A user is already logged in";
                 break;
             }
         case 2:
-            if (session != NULL){
+            if (!session && dynamic_cast<StandardBuyer*>(currentUser) != nullptr){
+                string gameTitle;
+                cout << "\nEnter the name of the game you wish to buy: ";
+                cin >> gameTitle;
+                /*if (games database contains gameTitle && currentUser balance >= game price)
+                currentUser.buy(game)*/ 
                 break;
             } else {
-                cout << "\nError: not a valid input. Please log in before proceeding.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions.";
                 break;
             }
         case 3:
-            if (session != NULL){
+            if (!session && dynamic_cast<StandardSeller*>(currentUser) != nullptr){
+                string gameTitle;
+                double price;
+                cout << "\nEnter the title of the game you wish to sell: ";
+                cin >> gameTitle;
+                cout << "\nEnter the price of", cout << gameTitle;
+                cin >> price;
+                //new game* = Game(gameTitle, price, currentUser.username());
+                //write new game to the csv file
                 break;
             } else {
-                cout << "\nError: not a valid input. Please log in before proceeding.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions.";
                 break;
             }
         case 4:
-            if (session != NULL){
+            if (!session){
+                //man this one is gonna suck ass I dont wanna actually do it
                 break;
             } else {
-                cout << "\nError: not a valid input. Please log in before proceeding.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions.";
                 break;
             }
         case 5:
-            if (session != NULL){
+            if (!session && dynamic_cast<Admin*>(currentUser) != nullptr){
+                string userType;
+                string newUsername;
+                cout << "\nEnter a username for the account you wish to create.";
+                cin >> newUsername;
+                cout << "\nWhat type of user is this? ('standard buy', 'standard sell', 'standard full', 'admin')";
+                cin >> userType;
+                //if username does not exist and username is shorter than 15 characters or whatever
+                //User newUser = currentUser.create(newUsername, userType);
+                //write newUser to AccountList.csv
                 break;
             } else {
-                cout << "\nError: not a valid input. Please log in before proceeding.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions.";
                 break;
             }
         case 6:
-            if (session != NULL){
+            if (!session && dynamic_cast<Admin*>(currentUser) != nullptr){
+                string toDelete;
+                cout << "\nEnter the username of the user you wish to delete:";
+                cin >> toDelete;
+                //if (user exists){delete(toDelete)}
+                //remove toDelete row from AccountList.csv
                 break;
             } else {
-                cout << "\nError: not a valid input. Please log in before proceeding.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions.";
                 break;
             }
         case 7:
-            if (session != NULL){
+            if (!session && dynamic_cast<Admin*>(currentUser) != nullptr){
+                string toCredit;
+                double amount;
+                cout << "\nEnter the username of the account you want to add credit to: ";
+                cin >> toCredit;
+                cout << "\nHow much credit would you like to add: ";
+                cin >> amount;
+                //if user toCredit exists, change the credit value in the csv file
                 break;
             } else {
-                cout << "\nError: not a valid input. Please log in before proceeding.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions.";
                 break;
             }
         case 8:
-            if (session != NULL){
+            if (!session && dynamic_cast<Admin*>(currentUser) != nullptr){
+                //for (users in userlist){cout << userlist.username}
                 break;
             } else {
-                cout << "\nError: not a valid input. Please log in before proceeding.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions.";
                 break;
             }
         case 9:
-            if (session != NULL){
-                session = NULL;
+            if (!session){
+                cout << "\nLogging out...";
+                currentUser = nullptr;
+                session = false;
                 break;
             } else {
-                cout << "\nError: not a valid input. Please log in before proceeding.";
+                cout << "\nError: not a valid input. No user is logged in.";
                 break;
             }
         case 0:
-            if (session == NULL){
+            if (session){
                 cout << "\nExiting program...";
                 break;
             } else {
@@ -141,9 +191,4 @@ int main(){
     } while (choice != 0);
     
     
-}
-
-User* login(string username){
-    User* currentUser = new User(username);
-    return currentUser;
 }
