@@ -5,8 +5,8 @@ using namespace std;
 
 class Game {
     private:
-        float price;
         string name;
+        float price;
         StandardSeller creator;
 
     public:
