@@ -21,7 +21,7 @@ class StandardBuyer : public virtual User{
         }
 
         void requestRefund(Game game, StandardSeller seller) {
-            cout << "refund for " << game.getName() << " has been sent to creator: " << game.getCreator().getUserName() << endl;
+            cout << "refund for " << game.getName() << " has been sent to creator: " << game.getCreator() << endl;
         }
 
     public:

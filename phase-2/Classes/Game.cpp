@@ -7,10 +7,10 @@ class Game {
     private:
         string name;
         float price;
-        StandardSeller creator;
+        string creator;
 
     public:
-        Game(float price, string name, StandardSeller creator): price(price), name(name), creator(creator) {}
+        Game(float price, string name, string creator): price(price), name(name), creator(creator) {}
 
         float getPrice() {
             return this->price;
@@ -20,7 +20,7 @@ class Game {
             return this->name;
         }
 
-        StandardSeller getCreator() {
+        string getCreator() {
             return this->creator;
         }
 
@@ -32,7 +32,7 @@ class Game {
             this->name = n;
         }
 
-        void setCreator(StandardSeller c) {
+        void setCreator(string c) {
             this->creator = c;
         }
 };
