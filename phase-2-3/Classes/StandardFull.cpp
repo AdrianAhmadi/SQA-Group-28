@@ -1,7 +1,6 @@
-#include "StandardSeller.cpp";
-#include "StandardBuyer.cpp";
-#include "User.cpp";
-#pragma once
+#include "StandardSeller.cpp"
+#include "StandardBuyer.cpp"
+#include "User.cpp"
 
 class StandardFull : public StandardBuyer, public StandardSeller {
     public:

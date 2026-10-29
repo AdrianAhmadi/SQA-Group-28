@@ -43,24 +43,24 @@ int main(){
 
     do
     {
-        cout << "Main Menu";
-        cout << "Enter the number of the option you would like to select:";
-        cout << "1. Login";
+        cout << "Main Menu"<< endl;
+        cout << "Enter the number of the option you would like to select:"<< endl;
+        cout << "1. Login"<< endl;
         if (!session){
-            cout << "2. Buy";
-            cout << "3. Sell";
-            cout << "4. Refund";
-            cout << "5. Create";
-            cout << "6. Delete";
-            cout << "7. Add Credit";
-            cout << "8. Account List";
-            cout << "9. Logout";
-            cout << "0. Exit";
+            cout << "2. Buy" << endl;
+            cout << "3. Sell"<< endl;
+            cout << "4. Refund"<< endl;
+            cout << "5. Create"<< endl;
+            cout << "6. Delete"<< endl;
+            cout << "7. Add Credit"<< endl;
+            cout << "8. Account List"<< endl;
+            cout << "9. Logout"<< endl;
+            cout << "0. Exit"<< endl;
         }
     cin >> choice;
 
     if (cin.fail()){
-        cout << "Error: please enter a number from 1-9";
+        cout << "Error: please enter a number from 1-9"<< endl;
         cin.clear();
         continue;
     }
@@ -78,19 +78,19 @@ int main(){
                 }
                 break;
             } else {
-                cout << "\nError: not a valid input. A user is already logged in";
+                cout << "\nError: not a valid input. A user is already logged in"<< endl;
                 break;
             }
         case 2:
             if (!session && dynamic_cast<StandardBuyer*>(currentUser) != nullptr){
                 string gameTitle;
-                cout << "\nEnter the name of the game you wish to buy: ";
+                cout << "\nEnter the name of the game you wish to buy: "<< endl;
                 cin >> gameTitle;
                 /*if (games database contains gameTitle && currentUser balance >= game price)
                 currentUser.buy(game)*/ 
                 break;
             } else {
-                cout << "\nError: not a valid input. You do not have sufficient permissions.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                 break;
             }
         case 3:
@@ -105,7 +105,7 @@ int main(){
                 //write new game to the csv file
                 break;
             } else {
-                cout << "\nError: not a valid input. You do not have sufficient permissions.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                 break;
             }
         case 4:
@@ -113,7 +113,7 @@ int main(){
                 //man this one is gonna suck ass I dont wanna actually do it
                 break;
             } else {
-                cout << "\nError: not a valid input. You do not have sufficient permissions.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                 break;
             }
         case 5:
@@ -129,7 +129,7 @@ int main(){
                 //write newUser to AccountList.csv
                 break;
             } else {
-                cout << "\nError: not a valid input. You do not have sufficient permissions.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                 break;
             }
         case 6:
@@ -141,7 +141,7 @@ int main(){
                 //remove toDelete row from AccountList.csv
                 break;
             } else {
-                cout << "\nError: not a valid input. You do not have sufficient permissions.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                 break;
             }
         case 7:
@@ -155,7 +155,7 @@ int main(){
                 //if user toCredit exists, change the credit value in the csv file
                 break;
             } else {
-                cout << "\nError: not a valid input. You do not have sufficient permissions.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                 break;
             }
         case 8:
@@ -163,17 +163,17 @@ int main(){
                 //for (users in userlist){cout << userlist.username}
                 break;
             } else {
-                cout << "\nError: not a valid input. You do not have sufficient permissions.";
+                cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                 break;
             }
         case 9:
             if (!session){
-                cout << "\nLogging out...";
+                cout << "\nLogging out..."<< endl;
                 currentUser = nullptr;
                 session = false;
                 break;
             } else {
-                cout << "\nError: not a valid input. No user is logged in.";
+                cout << "\nError: not a valid input. No user is logged in."<< endl;
                 break;
             }
         case 0:
@@ -185,7 +185,7 @@ int main(){
                 break;
             }
         default:
-            cout << "\nError: not a valid input. Please enter a number from 1-9";
+            cout << "\nError: not a valid input. Please enter a number from 1-9"<< endl;
             break;
         }
     } while (choice != 0);

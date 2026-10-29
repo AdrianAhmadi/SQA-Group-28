@@ -1,8 +1,8 @@
-#include "User.cpp";
-#include "Game.cpp";
+#include "User.cpp"
+#include "Game.cpp"
+#include "StandardSeller.cpp"
 #include <vector>
 #include <iostream>
-#pragma once
 
 using namespace std;
 

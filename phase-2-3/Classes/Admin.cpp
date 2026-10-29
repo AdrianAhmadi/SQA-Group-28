@@ -1,7 +1,7 @@
-#include "User.cpp";
-#include "StandardSeller.cpp";
-#include "StandardBuyer.cpp";
-#include "StandardFull.cpp";
+#include "User.cpp"
+#include "StandardSeller.cpp"
+#include "StandardBuyer.cpp"
+#include "StandardFull.cpp"
 
 class Admin : public User {
     private:
