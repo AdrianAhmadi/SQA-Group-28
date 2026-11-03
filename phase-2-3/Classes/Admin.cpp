@@ -23,6 +23,7 @@ class Admin : public User {
         }
 
         void OutputAccountList() {}
+
         void OutputGameList() {}
 
         void deleteUser(User &user) {}//should probably take the username as the argument

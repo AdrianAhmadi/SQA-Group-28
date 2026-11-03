@@ -21,7 +21,7 @@ class User {
 
     public:
         User(string userName) {this->userName = userName;}
-        virtual ~User() {}
+        virtual ~User() = default;
 
         void setBalance(float amount) {
             this->balance = amount;

@@ -16,7 +16,49 @@ using namespace std;
 
 User* userLogin(string username){
     //TODO: check the csv file for user permissions, then make switch block to call the appropriate constructor
-    User* currentUser = new User(username);
+    // Open the AccountList.csv to check if the username exists in the database, and what permissions it has
+    fstream AccountList;
+    AccountList.open("AccountList.csv");
+
+    //placeholder variables that are used within the while loop
+    User* currentUser = nullptr;
+    vector<string> row; //
+    string line, word, temp;
+    int perms = -1;
+
+    while (AccountList >> temp){
+        row.clear();
+        
+        stringstream s(line);
+
+        while (getline(s, word, ',')){
+            row.push_back(word);
+        }
+
+        if (row[0] == username){
+            //convert the vector field for user perms into an integer for the switch case (this isnt strictly necessary but its simpler to do)
+            perms = stoi(row[2]);
+
+            //switch case decides which constructor is called based on the permissions flag in the accountlist
+            switch (perms){
+                case 0:
+                    currentUser = new Admin(username);
+                    break;
+                case 1:
+                    currentUser = new StandardBuyer(username);
+                    break;
+                case 2:
+                    currentUser = new StandardSeller(username);
+                    break;
+                case 3:
+                    currentUser = new StandardFull(username);
+                    break;
+                default:
+                    cout << "Error: Permissions flag is not a valid integer input for userLogin function." << endl;
+                    break;
+            }
+        }
+    }
     return currentUser;
 }
 
@@ -28,25 +70,12 @@ int main(){
     int choice = -1;
     string accounts = "AccountList.csv";
     string games = "GameList.csv";
-    /*if(ifstream inputFileStream{accounts}; inputFileStream) {
-        string name;
-        double balance;
-        int userType;
-
-        while (getline(inputFileStream >> ws, name, ',') >> balance >> "," >> userType){
-
-        }
-    } else {
-        cerr << "Error, could not open accounts file.";
-    }
-    */
-
     do
     {
         cout << "Main Menu"<< endl;
         cout << "Enter the number of the option you would like to select:"<< endl;
         cout << "1. Login"<< endl;
-        if (!session){
+        if (session == true){
             cout << "2. Buy" << endl;
             cout << "3. Sell"<< endl;
             cout << "4. Refund"<< endl;
@@ -54,27 +83,29 @@ int main(){
             cout << "6. Delete"<< endl;
             cout << "7. Add Credit"<< endl;
             cout << "8. Account List"<< endl;
-            cout << "9. Logout"<< endl;
+            cout << "9. Search" << endl;
+            cout << "10. Logout" << endl;
             cout << "0. Exit"<< endl;
         }
     cin >> choice;
 
     if (cin.fail()){
-        cout << "Error: please enter a number from 1-9"<< endl;
+        cout << "Error: please enter a number from 0-10"<< endl;
         cin.clear();
         continue;
     }
 
     switch (choice){
         case 1:
-            if (session){
+            if (session == false){
                 cout << "Enter your username:";
                 string username = "";
                 cin >> username;
                 currentUser = userLogin(username);
 
                 if (currentUser != nullptr){
-                    session = 1;
+                    cout << "Login successful" << endl;
+                    session = true;
                 }
                 break;
             } else {
@@ -82,7 +113,7 @@ int main(){
                 break;
             }
         case 2:
-            if (!session && dynamic_cast<StandardBuyer*>(currentUser) != nullptr){
+            if (session == true && dynamic_cast<StandardBuyer*>(currentUser) != nullptr){
                 string gameTitle;
                 cout << "\nEnter the name of the game you wish to buy: "<< endl;
                 cin >> gameTitle;
@@ -94,7 +125,7 @@ int main(){
                 break;
             }
         case 3:
-            if (!session && dynamic_cast<StandardSeller*>(currentUser) != nullptr){
+            if (session == true && dynamic_cast<StandardSeller*>(currentUser) != nullptr){
                 string gameTitle;
                 double price;
                 cout << "\nEnter the title of the game you wish to sell: ";
@@ -109,7 +140,7 @@ int main(){
                 break;
             }
         case 4:
-            if (!session){
+            if (session == true){
                 //man this one is gonna suck ass I dont wanna actually do it
                 break;
             } else {
@@ -117,7 +148,7 @@ int main(){
                 break;
             }
         case 5:
-            if (!session && dynamic_cast<Admin*>(currentUser) != nullptr){
+            if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                 string userType;
                 string newUsername;
                 cout << "\nEnter a username for the account you wish to create.";
@@ -133,7 +164,7 @@ int main(){
                 break;
             }
         case 6:
-            if (!session && dynamic_cast<Admin*>(currentUser) != nullptr){
+            if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                 string toDelete;
                 cout << "\nEnter the username of the user you wish to delete:";
                 cin >> toDelete;
@@ -145,7 +176,7 @@ int main(){
                 break;
             }
         case 7:
-            if (!session && dynamic_cast<Admin*>(currentUser) != nullptr){
+            if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                 string toCredit;
                 double amount;
                 cout << "\nEnter the username of the account you want to add credit to: ";
@@ -159,7 +190,7 @@ int main(){
                 break;
             }
         case 8:
-            if (!session && dynamic_cast<Admin*>(currentUser) != nullptr){
+            if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                 //for (users in userlist){cout << userlist.username}
                 break;
             } else {
@@ -167,7 +198,15 @@ int main(){
                 break;
             }
         case 9:
-            if (!session){
+            if(session == true){
+                //print the thingy
+                break;
+            } else{
+                cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                break;
+            }
+        case 10:
+            if (session == true){
                 cout << "\nLogging out..."<< endl;
                 currentUser = nullptr;
                 session = false;
