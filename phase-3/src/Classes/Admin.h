@@ -5,13 +5,13 @@
 using namespace std;
 
 class Admin : public User {
-    private:
-        User* create(string userName, string userType);
+    public:
+        void create(string username, string userType, string accounts);
         float processRefund(Game game, User user);
         void OutputAccountList();
         void OutputGameList();
-        void deleteUser(string username);
+        void deleteUser(string username, string accounts);
 
-    public:
+    
         Admin(string userName);
 };

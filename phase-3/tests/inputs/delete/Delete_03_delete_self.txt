@@ -2,3 +2,4 @@ login
 Admin001
 delete
 Admin001
+logout
