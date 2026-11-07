@@ -1,0 +1,6 @@
+login
+Seller001
+sell
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+15.00
+logout

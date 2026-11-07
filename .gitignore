@@ -36,7 +36,6 @@
 
 # Executables
 *.exe
-*.out
 *.app
 
 # Build directories
@@ -67,3 +66,5 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+phase-3/tests/output/*
