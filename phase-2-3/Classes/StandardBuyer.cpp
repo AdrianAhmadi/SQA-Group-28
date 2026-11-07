@@ -1,23 +1,31 @@
-#include "StandardBuyer.h"
-#include "User.h"
-#include "Game.h"
-#include "StandardSeller.h"
+#pragma once
 
+#include "User.cpp"
+#include "Game.cpp"
+#include "StandardSeller.cpp"
+#include <vector>
 #include <iostream>
+
 using namespace std;
 
-void StandardBuyer::buy(Game game) {
-    if (this->getBalance() >= game.getPrice()) {
-        float newUserBalance = this->getBalance() - game.getPrice();
-        this->setBalance(newUserBalance);
-        gameCatalog.push_back(game);
-    } else {
-        cout << "insuficiant funds" << endl;
-    }
-}
+class StandardBuyer : public virtual User{
+    private:
+        vector<Game> gameCatalog = {};
 
-void StandardBuyer::requestRefund(Game game, StandardSeller seller) {
-    cout << "refund for " << game.getName() << " has been sent to creator: " << game.getCreator() << endl;
-}
+        void buy(Game game) {
+            if (this->getBalance() >= game.getPrice()) {
+                float newUserBalance = this->getBalance() - game.getPrice();
+                this->setBalance(newUserBalance);
+                gameCatalog.push_back(game);
+            } else {
+                cout << "insuficiant funds" << endl;
+            }
+        }
 
-StandardBuyer::StandardBuyer(string userName): User(userName){}
+        void requestRefund(Game game, StandardSeller seller) {
+            cout << "refund for " << game.getName() << " has been sent to creator: " << game.getCreator() << endl;
+        }
+
+    public:
+        StandardBuyer(string userName): User(userName){}
+};

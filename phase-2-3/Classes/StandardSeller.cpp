@@ -1,6 +1,13 @@
-#include "StandardSeller.h"
+#pragma once
 
+#include <string>
+#include "User.cpp"
+#include "Game.cpp"
 
-StandardSeller::StandardSeller(string userName): User(userName){}
-
-void StandardSeller::sell(Game game) {}
+class StandardSeller : public virtual User {
+    private:
+        void sell(Game game) {}
+    
+    public:
+        StandardSeller(string userName): User(userName){}
+};

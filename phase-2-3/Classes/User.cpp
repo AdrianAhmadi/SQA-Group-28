@@ -1,22 +1,39 @@
-#include "User.h"
+#pragma once
+
 #include <string>
 #include <iostream>
 using namespace std;
 
-void User::addCredit() {
-    cout << "credit method used" << endl;
-}
+class User {
+    private:
+        string userName;
+        float balance = 0.0;
 
-User::User(string userName) {this->userName = userName;}
+        void login() {
 
-void User::setBalance(float amount) {
-    this->balance = amount;
-}
+        }
 
-float User::getBalance() {
-    return this->balance;
-}
+        void logout() {
 
-string User::getUserName() {
-    return this->userName;
-}
+        }
+
+        virtual void addCredit() {
+            cout << "credit method used" << endl;
+        }
+
+    public:
+        User(string userName) {this->userName = userName;}
+        virtual ~User() = default;
+
+        void setBalance(float amount) {
+            this->balance = amount;
+        }
+
+        float getBalance() {
+            return this->balance;
+        }
+
+        string getUserName() {
+            return this->userName;
+        }
+};

@@ -1,6 +1,10 @@
-#include "StandardFull.h"
-#include "StandardSeller.h"
-#include "StandardBuyer.h"
-#include "User.h"
+#pragma once
 
-StandardFull::StandardFull(string userName): User(userName), StandardSeller(userName), StandardBuyer(userName){}
+#include "StandardSeller.cpp"
+#include "StandardBuyer.cpp"
+#include "User.cpp"
+
+class StandardFull : public StandardBuyer, public StandardSeller {
+    public:
+        StandardFull(string userName): User(userName), StandardSeller(userName), StandardBuyer(userName){}
+};

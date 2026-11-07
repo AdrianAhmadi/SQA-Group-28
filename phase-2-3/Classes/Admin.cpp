@@ -1,30 +1,35 @@
-#include "Admin.h"
-#include "User.h"
-#include "StandardSeller.h"
-#include "StandardBuyer.h"
-#include "StandardFull.h"
+#pragma once
 
-User* Admin::create(string userName, string userType) {
-    if (userType == "standard seller") {
-        return new StandardSeller(userName);
-    } else if (userType == "standard buyer") {
-        return new StandardBuyer(userName);
-    } else if (userType == "standard full") {
-        return static_cast<User*>(static_cast<StandardSeller*>(new StandardFull(userName)));
-    } else if (userType == "admin") {
-        return new Admin(userName);
-    }
-}
+#include "User.cpp"
+#include "StandardSeller.cpp"
+#include "StandardBuyer.cpp"
+#include "StandardFull.cpp"
 
-float Admin::processRefund(Game game, User user) {
-    user.setBalance(game.getPrice());
-    return game.getPrice();
-}
+class Admin : public User {
+    private:
+        User* create(string userName, string userType) {
+            if (userType == "standard seller") {
+                return new StandardSeller(userName);
+            } else if (userType == "standard buyer") {
+                return new StandardBuyer(userName);
+            } else if (userType == "standard full") {
+                return static_cast<User*>(static_cast<StandardSeller*>(new StandardFull(userName)));
+            } else if (userType == "admin") {
+                return new Admin(userName);
+            }
+        }
 
-void Admin::OutputAccountList() {}
+        float processRefund(Game game, User user) {
+            user.setBalance(game.getPrice());
+            return game.getPrice();
+        }
 
-void Admin::OutputGameList() {}
+        void OutputAccountList() {}
 
-void Admin::deleteUser(User &user) {}//should probably take the username as the argument
+        void OutputGameList() {}
 
-Admin::Admin(string userName): User(userName) {}
+        void deleteUser(User &user) {}//should probably take the username as the argument
+
+    public:
+        Admin(string userName): User(userName) {}
+};
