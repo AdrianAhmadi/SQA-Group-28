@@ -16,13 +16,12 @@
 
 using namespace std;
 
-enum Inputs {login, buy, sell, refund, create, deleteuser, addcredit, accountlist, search, logout, quit};
+enum Inputs {login, buy, sell, refund, create, deleteuser, addcredit, accountlist, usersearch, logout, quit};
 
 const map<string, Inputs> inputMap = {{"login", login}, {"buy", buy}, {"sell", sell}, {"refund", refund}, {"create", create},{"delete", deleteuser}, {"addcredit", addcredit},
-{"accountlist", accountlist}, {"search", search}, {"logout", logout}, {"quit", quit}};
+{"accountlist", accountlist}, {"search", usersearch}, {"logout", logout}, {"quit", quit}};
 
 User* userLogin(string username, string accounts){
-    //TODO: check the csv file for user permissions, then make switch block to call the appropriate constructor
     // Open the AccountList.csv to check if the username exists in the database, and what permissions it has
     fstream AccountList;
     AccountList.open(accounts);
@@ -86,11 +85,10 @@ int main(int argc, char* argv[]){
     bool session = false;
     User* currentUser = nullptr;
     string choice = "";
-    // string accounts = argv[1];
-    // string games = argv[2];
-    // string gamesCollection = argv[3];
-    // string transactionOutput = argv[4];
-    string accounts, games, gamesCollection, transactionOutput = "../data/";
+    string accounts= ".\\data\\";
+    string games = ".\\data\\"; 
+    string gamesCollection = ".\\data\\";
+    string transactionOutput = ".\\data\\";
     accounts.append(argv[1]);
     games.append(argv[2]);
     gamesCollection.append(argv[3]);
@@ -117,7 +115,7 @@ int main(int argc, char* argv[]){
         x = tolower(x);
     }
     if (cin.fail()){
-        cout << "Error: please enter a number from 0-10"<< endl;
+        cout << "Error: Input invalid."<< endl;
         cin.clear();
         continue;
     }
@@ -131,8 +129,10 @@ int main(int argc, char* argv[]){
                     cin >> username;
                     currentUser = userLogin(username, accounts);
 
-                    if (currentUser != nullptr){
-                        cout << "Login successful" << endl;
+                    if (currentUser == nullptr){
+                        cout << "Login failed: no such user found." << endl;
+                    } else {
+                        cout << "Login successful." << endl;
                         session = true;
                     }
                     break;
@@ -225,7 +225,7 @@ int main(int argc, char* argv[]){
                     cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                     break;
                 }
-            case search:
+            case usersearch:
                 if(session == true){
                     //print the thingy
                     break;
@@ -244,18 +244,13 @@ int main(int argc, char* argv[]){
                     break;
                 }
             case quit:
-                if (session){
-                    cout << "\nExiting program...";
-                    break;
-                } else {
-                    cout << "\nError: please log out before closing the program.";
-                    break;
-                }
+                cout << "\nExiting program..." << endl;
+                break;
             default:
                 cout << "\nError: not a valid input. Please enter a number from 1-9"<< endl;
                 break;
             }
         } 
     }    while (choice != "quit");
-        
+    return 0;
 }

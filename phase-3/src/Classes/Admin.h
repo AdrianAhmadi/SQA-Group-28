@@ -10,7 +10,7 @@ class Admin : public User {
         float processRefund(Game game, User user);
         void OutputAccountList();
         void OutputGameList();
-        void deleteUser(User &user);
+        void deleteUser(string username);
 
     public:
         Admin(string userName);
