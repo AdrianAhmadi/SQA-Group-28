@@ -6,15 +6,11 @@ class User {
     private:
         string userName;
         float balance = 0.0;
-
-        void login();
-        void logout();
-        virtual void addCredit();
-
+        
     public:
         User(string userName);
         virtual ~User() = default;
-
+        virtual void addCredit();
         void setBalance(float amount);
         float getBalance();
         string getUserName();

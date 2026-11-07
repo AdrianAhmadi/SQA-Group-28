@@ -5,9 +5,8 @@
 using namespace std;
 
 class StandardSeller : public virtual User {
-    private:
+    public:
         void sell(Game game);
     
-    public:
         StandardSeller(string userName);
 };

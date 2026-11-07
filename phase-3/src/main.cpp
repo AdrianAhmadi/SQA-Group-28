@@ -110,7 +110,7 @@ int main(int argc, char* argv[]){
             cout << "logout" << endl;
         }
         cout << "quit"<< endl;
-        cout << "Select a function you would like to perform:"<< endl;
+        cout << "Select a function you would like to perform: ";
         cin >> choice;
         for (auto& x : choice){
             x = tolower(x);
@@ -187,6 +187,7 @@ int main(int argc, char* argv[]){
                         if (newUsername.length() <= 15){
                             Admin* adminUser = dynamic_cast<Admin*>(currentUser);
                             adminUser->create(newUsername, userType, accounts);
+                            //TODO: output to the daily transaction file
                         } else {
                             cout << "\nInvalid input: please try again.";
                         }
@@ -206,6 +207,7 @@ int main(int argc, char* argv[]){
                         } else {
                             Admin* adminUser = dynamic_cast<Admin*>(currentUser);
                             adminUser->deleteUser(toDelete, accounts);
+                            //TODO: output to the daily transaction file
                         }
                         break;
                     } else {
@@ -216,14 +218,17 @@ int main(int argc, char* argv[]){
                     if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                         string toCredit;
                         double amount;
-                        cout << "\nEnter the username of the account you want to add credit to: ";
-                        cin >> toCredit;
                         cout << "\nHow much credit would you like to add: ";
                         cin >> amount;
-                        //if user toCredit exists, change the credit value in the csv file
+                        cout << "\nEnter the username of the account you want to add credit to: ";
+                        cin >> toCredit;
+                        Admin* adminUser = dynamic_cast<Admin*>(currentUser);
+                        adminUser->addCredit(toCredit, amount, accounts);
+                        //TODO: output to the daily transaction file
                         break;
                     } else {
-                        cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        //do the other version of add credit
+
                         break;
                     }
                 case accountlist:

@@ -8,12 +8,9 @@ class StandardSeller; // Forward declaration
 using namespace std;
 
 class StandardBuyer : public virtual User {
-    private:
+    public:
         vector<Game> gameCatalog = {};
-
         void buy(Game game);
         void requestRefund(Game game, StandardSeller seller);
-
-    public:
         StandardBuyer(string userName);
 };

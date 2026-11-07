@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <cstdio>
+#include <iomanip>
 #include "Admin.h"
 #include "User.h"
 #include "StandardSeller.h"
@@ -57,7 +58,7 @@ void Admin::create(string username, string userType, string accounts) {
                     cout << "Error: Could not open file." << endl;
                     return;
                 }
-                outstream << username << ',' << 0 << ',' << i << endl;
+                outstream << '\n' << username << ',' << 0.00 << ',' << i;
                 outstream.close();
                 cout << "User successfully created." << endl;
                 return;
@@ -82,6 +83,7 @@ void Admin::deleteUser(string username, string accounts) {
     ifstream instream;
     ofstream outstream;
 
+    bool first = true;
     bool found = false;
     vector<string> row;
     string line, word, temp;
@@ -112,7 +114,74 @@ void Admin::deleteUser(string username, string accounts) {
             found = true;
             continue;
         }
-        outstream << line << '\n';
+        if (first == false){
+            outstream << '\n';
+        }
+        outstream << line;
+        first = false;
+    }
+    instream.close();
+    outstream.close();
+
+    if (found == false){
+        cout << "No such user found." << endl;
+        remove(tempfile.c_str());
+        return;
+    }
+    remove(accounts.c_str());
+    rename(tempfile.c_str(), accounts.c_str());
+}
+
+void Admin::addCredit(string username, float credit, string accounts){
+    string tempfile = ".\\data\\temp.txt";
+    ifstream instream;
+    ofstream outstream;
+
+    bool first = true;
+    bool found = false;
+    vector<string> row;
+    string line, word, temp;
+    double total;
+
+    instream.open(accounts);
+    outstream.open(tempfile);
+
+    if (!instream.is_open()){
+        cerr << "Error: Could not open account file." << endl;
+        return;
+    }
+
+    if (!outstream.is_open()){
+        cerr << "Error: Could not create output file." << endl;
+        return;
+    }
+
+    while(getline(instream, line)){
+        row.clear();
+        stringstream s(line);
+
+        while(getline(s, word, ',')){
+            row.push_back(word);
+        }
+        if (row.size() < 3){
+            continue;
+        }
+        if (row.size() >= 3 && row[0] == username){
+            total = stod(row[1]) + credit;
+            if (total > 999999.99){
+                cout << "Error: account would exceed total credit limit." << endl;
+            } else {
+                stringstream ss;
+                ss << fixed << setprecision(2) << total;
+                row[1] = ss.str();
+            }
+            found = true;
+        }
+        if (first == false){
+            outstream << '\n';
+        }
+        outstream << row[0] << ',' << row[1] << ',' << row[2];
+        first = false;
     }
     instream.close();
     outstream.close();

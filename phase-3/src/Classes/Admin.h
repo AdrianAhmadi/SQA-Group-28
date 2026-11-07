@@ -11,7 +11,7 @@ class Admin : public User {
         void OutputAccountList();
         void OutputGameList();
         void deleteUser(string username, string accounts);
-
+        void addCredit(string username, float credit, string accounts);
     
         Admin(string userName);
 };
