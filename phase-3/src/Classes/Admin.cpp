@@ -58,7 +58,7 @@ void Admin::create(string username, string userType, string accounts) {
                     cout << "Error: Could not open file." << endl;
                     return;
                 }
-                outstream << '\n' << username << ',' << 0.00 << ',' << i;
+                outstream << '\n' << username << ',' << 0.00 << ',' << perms[i];
                 outstream.close();
                 cout << "User successfully created." << endl;
                 return;
@@ -74,9 +74,35 @@ float Admin::processRefund(Game game, User user) {
     return game.getPrice();
 }
 
-void Admin::OutputAccountList() {}
+void Admin::OutputAccountList() {
+    ifstream instream;
+    instream.open(".\\data\\currentaccounts.txt");
+    if (!instream.is_open()){
+        cerr << "Error: Could not open account file." << endl;
+        return;
+    }
+    
+    string line;
 
-void Admin::OutputGameList() {}
+    while(getline(instream, line)){
+        cout << line << endl;
+    }
+}
+
+void Admin::OutputGameList() {
+    ifstream instream;
+    instream.open(".\\data\\availablegames.txt");
+    if (!instream.is_open()){
+        cerr << "Error: Could not open account file." << endl;
+        return;
+    }
+    
+    string line;
+
+    while(getline(instream, line)){
+        cout << line << endl;
+    }
+}
 
 void Admin::deleteUser(string username, string accounts) {
     string tempfile = ".\\data\\temp.txt";

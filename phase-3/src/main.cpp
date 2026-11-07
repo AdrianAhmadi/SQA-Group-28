@@ -35,7 +35,7 @@ User* userLogin(string username, string accounts){
     User* currentUser = nullptr;
     vector<string> row; //
     string line, word, temp;
-    int perms = -1;
+    string perms = "";
 
     while (getline(AccountList, line)){
         row.clear();
@@ -48,27 +48,25 @@ User* userLogin(string username, string accounts){
 
         if (row.size() >= 3 && row[0] == username){
             //convert the vector field for user perms into an integer for the switch case (this isnt strictly necessary but its simpler to do)
-            perms = stoi(row[2]);
+            perms = row[2];
 
             //switch case decides which constructor is called based on the permissions flag in the accountlist
-            switch (perms){
-                case 0:
-                    currentUser = new Admin(username);
-                    break;
-                case 1:
-                    currentUser = new StandardBuyer(username);
-                    break;
-                case 2:
-                    currentUser = new StandardSeller(username);
-                    break;
-                case 3:
-                    currentUser = new StandardFull(username);
-                    break;
-                default:
-                    cout << "Error: Permissions flag is not a valid integer input for userLogin function." << endl;
-                    break;
+            if (perms == "AA"){
+                currentUser = new Admin(username);
+                break;
+            } else if (perms == "BS"){
+                currentUser = new StandardBuyer(username);
+                break;
+            } else if (perms == "SS"){
+                currentUser = new StandardSeller(username);
+                break;
+            } else if (perms == "FS"){
+                currentUser = new StandardFull(username);
+                break;
+            } else {
+                cout << "Error: Permissions flag is not a valid integer input for userLogin function." << endl;
+                break;
             }
-            break;
         }
     }
     return currentUser;
@@ -234,6 +232,8 @@ int main(int argc, char* argv[]){
                 case accountlist:
                     if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                         //for (users in userlist){cout << userlist.username}
+                        Admin* adminUser = dynamic_cast<Admin*>(currentUser);
+                        adminUser->OutputAccountList();
                         break;
                     } else {
                         cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
