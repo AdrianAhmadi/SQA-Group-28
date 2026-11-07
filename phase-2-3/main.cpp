@@ -4,12 +4,12 @@
 #include <unordered_map>
 #include <string>
 
-#include "Classes\\User.cpp"
-#include "Classes\\Admin.cpp"
-#include "Classes\\StandardBuyer.cpp"
-#include "Classes\\StandardSeller.cpp"
-#include "Classes\\StandardFull.cpp"
-#include "Classes\\Game.cpp"
+#include "Classes\\User.h"
+#include "Classes\\Admin.h"
+#include "Classes\\StandardBuyer.h"
+#include "Classes\\StandardSeller.h"
+#include "Classes\\StandardFull.h"
+#include "Classes\\Game.h"
 
 using namespace std;
 

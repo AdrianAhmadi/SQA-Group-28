@@ -1,37 +1,29 @@
+#include "Game.h"
 #include <string>
-
 using namespace std;
 
-class Game {
-    private:
-        string name;
-        float price;
-        string creator;
+Game::Game(float price, string name, string creator): price(price), name(name), creator(creator) {}
 
-    public:
-        Game(float price, string name, string creator): price(price), name(name), creator(creator) {}
+float Game::getPrice() {
+    return this->price;
+}
 
-        float getPrice() {
-            return this->price;
-        }
+string Game::getName() {
+    return this->name;
+}
 
-        string getName() {
-            return this->name;
-        }
+string Game::getCreator() {
+    return this->creator;
+}
 
-        string getCreator() {
-            return this->creator;
-        }
+void Game::setPrice(float p) {
+    this->price = p;
+}
 
-        void setPrice(float p) {
-            this->price = p;
-        }
+void Game::setName(string n) {
+    this->name = n;
+}
 
-        void setName(string n) {
-            this->name = n;
-        }
-
-        void setCreator(string c) {
-            this->creator = c;
-        }
-};
+void Game::setCreator(string c) {
+    this->creator = c;
+}

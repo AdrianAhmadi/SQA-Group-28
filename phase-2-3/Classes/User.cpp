@@ -1,37 +1,22 @@
+#include "User.h"
 #include <string>
 #include <iostream>
 using namespace std;
 
-class User {
-    private:
-        string userName;
-        float balance = 0.0;
+void User::addCredit() {
+    cout << "credit method used" << endl;
+}
 
-        void login() {
+User::User(string userName) {this->userName = userName;}
 
-        }
+void User::setBalance(float amount) {
+    this->balance = amount;
+}
 
-        void logout() {
+float User::getBalance() {
+    return this->balance;
+}
 
-        }
-
-        virtual void addCredit() {
-            cout << "credit method used" << endl;
-        }
-
-    public:
-        User(string userName) {this->userName = userName;}
-        virtual ~User() = default;
-
-        void setBalance(float amount) {
-            this->balance = amount;
-        }
-
-        float getBalance() {
-            return this->balance;
-        }
-
-        string getUserName() {
-            return this->userName;
-        }
-};
+string User::getUserName() {
+    return this->userName;
+}

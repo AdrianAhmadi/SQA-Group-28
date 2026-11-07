@@ -1,11 +1,6 @@
-#include <string>
-#include "User.cpp"
-#include "Game.cpp"
+#include "StandardSeller.h"
 
-class StandardSeller : public virtual User {
-    private:
-        void sell(Game game) {}
-    
-    public:
-        StandardSeller(string userName): User(userName){}
-};
+
+StandardSeller::StandardSeller(string userName): User(userName){}
+
+void StandardSeller::sell(Game game) {}

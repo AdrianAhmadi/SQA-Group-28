@@ -1,8 +1,6 @@
-#include "StandardSeller.cpp"
-#include "StandardBuyer.cpp"
-#include "User.cpp"
+#include "StandardFull.h"
+#include "StandardSeller.h"
+#include "StandardBuyer.h"
+#include "User.h"
 
-class StandardFull : public StandardBuyer, public StandardSeller {
-    public:
-        StandardFull(string userName): User(userName), StandardSeller(userName), StandardBuyer(userName){}
-};
+StandardFull::StandardFull(string userName): User(userName), StandardSeller(userName), StandardBuyer(userName){}
