@@ -64,7 +64,7 @@ User* userLogin(string username, string accounts){
                 currentUser = new StandardFull(username);
                 break;
             } else {
-                cout << "Error: Permissions flag is not a valid integer input for userLogin function." << endl;
+                //cout << "Error: Permissions flag is not a valid integer input for userLogin function." << endl;
                 break;
             }
         }
@@ -93,7 +93,7 @@ int main(int argc, char* argv[]){
     transactionOutput.append(argv[4]);
     do
     {
-        cout << "\nMain Menu"<< endl;
+        /*cout << "\nMain Menu"<< endl;
         cout << "Options:" << endl;
         cout << "login"<< endl;
         if (session == true){
@@ -108,13 +108,13 @@ int main(int argc, char* argv[]){
             cout << "logout" << endl;
         }
         cout << "quit"<< endl;
-        cout << "Select a function you would like to perform: ";
+        cout << "Select a function you would like to perform: ";*/
         cin >> choice;
         for (auto& x : choice){
             x = tolower(x);
         }
         if (cin.fail()){
-            cout << "Error: Input invalid."<< endl;
+            //cout << "Error: Input invalid."<< endl;
             cin.clear();
             continue;
         }
@@ -123,32 +123,33 @@ int main(int argc, char* argv[]){
             switch (command->second){
                 case login:
                     if (session == false){
-                        cout << "Enter your username:";
+                        cout << "Enter your username:" << endl;
                         string username = "";
                         cin >> username;
                         currentUser = userLogin(username, accounts);
 
                         if (currentUser == nullptr){
-                            cout << "Login failed: no such user found." << endl;
+                            //cout << "Login failed: no such user found." << endl;
                         } else {
-                            cout << "Login successful." << endl;
+                            //cout << "Login successful." << endl;
                             session = true;
                         }
                         break;
                     } else {
-                        cout << "\nError: not a valid input. A user is already logged in"<< endl;
+                        //cout << "\nError: not a valid input. A user is already logged in"<< endl;
                         break;
                     }
                 case buy:
                     if (session == true && dynamic_cast<StandardBuyer*>(currentUser) != nullptr){
                         string gameTitle;
-                        cout << "\nEnter the name of the game you wish to buy: "<< endl;
+                        cout << "Enter game name:"<< endl;
                         cin >> gameTitle;
+                        cout << "Enter seller name:"<< endl;
                         /*if (games database contains gameTitle && currentUser balance >= game price)
                         currentUser.buy(game)*/ 
                         break;
                     } else {
-                        cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                         break;
                     }
                 case sell:
@@ -163,7 +164,7 @@ int main(int argc, char* argv[]){
                         //write new game to the csv file
                         break;
                     } else {
-                        cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                         break;
                     }
                 case refund:
@@ -171,33 +172,35 @@ int main(int argc, char* argv[]){
                         //man this one is gonna suck ass I dont wanna actually do it
                         break;
                     } else {
-                        cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                         break;
                     }
                 case create:
                     if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                         string userType;
                         string newUsername;
-                        cout << "\nEnter a username for the account you wish to create (Must be 15 characters or less): ";
+                        //cout << "\nEnter a username for the account you wish to create (Must be 15 characters or less): ";
+                        cout << "Enter new username:" << endl;
                         cin >> newUsername;
-                        cout << "\nWhat type of user is this?\nBS => standard buy\nSS => standard sell\nFS => standard full\nAA => admin" << endl;
+                        //cout << "\nWhat type of user is this?\nBS => standard buy\nSS => standard sell\nFS => standard full\nAA => admin" << endl;
+                        cout << "Enter user type (AA/FS/BS/SS):"<< endl;
                         cin >> userType;
                         if (newUsername.length() <= 15){
                             Admin* adminUser = dynamic_cast<Admin*>(currentUser);
                             adminUser->create(newUsername, userType, accounts);
                             //TODO: output to the daily transaction file
                         } else {
-                            cout << "\nInvalid input: please try again.";
+                            //cout << "\nInvalid input: please try again.";
                         }
                         break;
                     } else {
-                        cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                         break;
                     }
                 case deleteuser:
                     if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                         string toDelete;
-                        cout << "\nEnter the username of the user you wish to delete:";
+                        cout << "Enter username to delete:" << endl;
                         cin >> toDelete;
                         if (toDelete == currentUser->getUserName()){
                             cout << "\nError: cannot delete the current user." << endl;
@@ -209,7 +212,7 @@ int main(int argc, char* argv[]){
                         }
                         break;
                     } else {
-                        cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                         break;
                     }
                 case addcredit:
@@ -236,7 +239,7 @@ int main(int argc, char* argv[]){
                         adminUser->OutputAccountList();
                         break;
                     } else {
-                        cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                         break;
                     }
                 case usersearch:
@@ -244,7 +247,7 @@ int main(int argc, char* argv[]){
                         //print the thingy
                         break;
                     } else{
-                        cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                         break;
                     }
                 case logout:
@@ -254,14 +257,14 @@ int main(int argc, char* argv[]){
                         session = false;
                         break;
                     } else {
-                        cout << "\nError: not a valid input. No user is logged in."<< endl;
+                        //cout << "\nError: not a valid input. No user is logged in."<< endl;
                         break;
                     }
                 case quit:
-                    cout << "\nExiting program..." << endl;
+                    //cout << "\nExiting program..." << endl;
                     break;
                 default:
-                    cout << "\nError: not a valid input. Please enter a number from 1-9"<< endl;
+                    //cout << "\nError: not a valid input. Please enter a number from 1-9"<< endl;
                     break;
             }
         } 

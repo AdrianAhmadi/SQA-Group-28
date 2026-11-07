@@ -46,7 +46,7 @@ void Admin::create(string username, string userType, string accounts) {
     instream.close();
 
     if (found == true){
-        cout << "Error: User already exists." << endl;
+        //cout << "Error: User already exists." << endl;
         return;
     }
 
@@ -60,7 +60,7 @@ void Admin::create(string username, string userType, string accounts) {
                 }
                 outstream << '\n' << username << ',' << 0.00 << ',' << perms[i];
                 outstream.close();
-                cout << "User successfully created." << endl;
+                //cout << "User successfully created." << endl;
                 return;
             }
         }
@@ -136,7 +136,7 @@ void Admin::deleteUser(string username, string accounts) {
             row.push_back(word);
         }
         if (row[0] == username){
-            cout << "User deleted." << endl;
+            //cout << "User deleted." << endl;
             found = true;
             continue;
         }
@@ -150,7 +150,7 @@ void Admin::deleteUser(string username, string accounts) {
     outstream.close();
 
     if (found == false){
-        cout << "No such user found." << endl;
+        //cout << "No such user found." << endl;
         remove(tempfile.c_str());
         return;
     }
@@ -195,7 +195,7 @@ void Admin::addCredit(string username, float credit, string accounts){
         if (row.size() >= 3 && row[0] == username){
             total = stod(row[1]) + credit;
             if (total > 999999.99){
-                cout << "Error: account would exceed total credit limit." << endl;
+                //cout << "Error: account would exceed total credit limit." << endl;
             } else {
                 stringstream ss;
                 ss << fixed << setprecision(2) << total;
@@ -213,7 +213,7 @@ void Admin::addCredit(string username, float credit, string accounts){
     outstream.close();
 
     if (found == false){
-        cout << "No such user found." << endl;
+        //cout << "No such user found." << endl;
         remove(tempfile.c_str());
         return;
     }
