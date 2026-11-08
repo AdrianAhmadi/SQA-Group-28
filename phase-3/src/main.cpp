@@ -19,13 +19,13 @@ using namespace std;
 enum Inputs {login, buy, sell, refund, create, deleteuser, addcredit, accountlist, gamelist, usersearch, logout, quit};
 
 const map<string, Inputs> inputMap = {{"login", login}, {"buy", buy}, {"sell", sell}, {"refund", refund}, {"create", create},{"delete", deleteuser}, {"addcredit", addcredit},
-{"gamelist", gamelist}, {"accountlist", accountlist}, {"search", usersearch}, {"logout", logout}, {"quit", quit}};
+{"list", gamelist}, {"accountlist", accountlist}, {"search", usersearch}, {"logout", logout}, {"quit", quit}};
 
 User* userLogin(string username, string accounts){
     // Open the AccountList.csv to check if the username exists in the database, and what permissions it has
     fstream AccountList;
     AccountList.open(accounts);
-
+    bool found = false;
     if (!AccountList.is_open()){
         cerr << "Error: Could not open account file." << endl;
         return nullptr;
@@ -36,9 +36,12 @@ User* userLogin(string username, string accounts){
     vector<string> row; //
     string line, word, temp;
     string perms = "";
-    if (username.length() > 15) return nullptr;
-        string formatted = username;
-        formatted.append(15 - formatted.length(), ' ');
+    if (username.length() > 15){
+        cout << "Username too long" << endl;
+        return nullptr;
+    }
+    string formatted = username;
+    formatted.append(15 - formatted.length(), ' ');
 
     while (getline(AccountList, line)){
         row.clear();
@@ -53,7 +56,7 @@ User* userLogin(string username, string accounts){
 
             //convert the vector field for user perms into an integer for the switch case (this isnt strictly necessary but its simpler to do)
             perms = row[1];
-
+            found = true;
             //switch case decides which constructor is called based on the permissions flag in the accountlist
             if (perms == "AA"){
                 currentUser = new Admin(username);
@@ -73,6 +76,7 @@ User* userLogin(string username, string accounts){
             }
         }
     }
+    if (found == false) cout << "User not found" << endl;
     return currentUser;
 }
 
@@ -135,6 +139,7 @@ int main(int argc, char* argv[]){
                         break;
                     } else {
                         //cout << "\nError: not a valid input. A user is already logged in"<< endl;
+                        cout << "Already logged in" << endl;
                         break;
                     }
                 case buy:
@@ -235,10 +240,10 @@ int main(int argc, char* argv[]){
                     if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                         string toCredit;
                         double amount;
-                        cout << "Enter username:" << endl;
-                        cin >> toCredit;
                         cout << "Enter amount:" << endl;
                         cin >> amount;
+                        cout << "Enter username to credit:" << endl;
+                        cin >> toCredit;
                         Admin* adminUser = dynamic_cast<Admin*>(currentUser);
                         adminUser->addCredit(toCredit, amount, accounts);
                         //TODO: output to the daily transaction file
