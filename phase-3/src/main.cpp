@@ -248,7 +248,7 @@ int main(int argc, char* argv[]){
                     }
                 case gamelist:
                     if (session == true && currentUser != nullptr){
-                        //currentUser->OutputGameList();
+                        currentUser->OutputGameList(accounts);
                         break;
                     } else {
                         break;
