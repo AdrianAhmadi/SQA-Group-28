@@ -156,9 +156,9 @@ int main(int argc, char* argv[]){
                     if (session == true && dynamic_cast<StandardSeller*>(currentUser) != nullptr){
                         string gameTitle;
                         double price;
-                        cout << "\nEnter the title of the game you wish to sell: ";
+                        cout << "Enter game name:" << endl;
                         cin >> gameTitle;
-                        cout << "\nEnter the price of", cout << gameTitle;
+                        cout << "Enter price:" << endl;
                         cin >> price;
                         //new game* = Game(gameTitle, price, currentUser.username());
                         //write new game to the csv file
@@ -203,7 +203,7 @@ int main(int argc, char* argv[]){
                         cout << "Enter username to delete:" << endl;
                         cin >> toDelete;
                         if (toDelete == currentUser->getUserName()){
-                            cout << "\nError: cannot delete the current user." << endl;
+                            //cout << "\nError: cannot delete the current user." << endl;
                             break;
                         } else {
                             Admin* adminUser = dynamic_cast<Admin*>(currentUser);
@@ -219,10 +219,9 @@ int main(int argc, char* argv[]){
                     if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                         string toCredit;
                         double amount;
-                        cout << "\nHow much credit would you like to add: ";
+                        cout << "Enter username:" << endl;
                         cin >> amount;
-                        cout << "\nEnter the username of the account you want to add credit to: ";
-                        cin >> toCredit;
+                        cout << "Enter amount:" << endl;
                         Admin* adminUser = dynamic_cast<Admin*>(currentUser);
                         adminUser->addCredit(toCredit, amount, accounts);
                         //TODO: output to the daily transaction file
@@ -252,7 +251,7 @@ int main(int argc, char* argv[]){
                     }
                 case logout:
                     if (session == true){
-                        cout << "\nLogging out..."<< endl;
+                        //cout << "\nLogging out..."<< endl;
                         currentUser = nullptr;
                         session = false;
                         break;
