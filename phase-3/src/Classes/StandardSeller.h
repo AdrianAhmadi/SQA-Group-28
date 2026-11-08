@@ -6,7 +6,7 @@ using namespace std;
 
 class StandardSeller : public virtual User {
     public:
-        void sell(Game game);
+        void sell(string gameTitle, float price, string sellerName, string gamesFilePath, string transOutPath);
     
         StandardSeller(string userName);
 };

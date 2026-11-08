@@ -160,6 +160,8 @@ int main(int argc, char* argv[]){
                         cin >> gameTitle;
                         cout << "Enter price:" << endl;
                         cin >> price;
+                        StandardSeller* sellerUser = dynamic_cast<StandardSeller*>(currentUser);
+                        sellerUser->sell(gameTitle, price, sellerUser->getUserName(), games);
                         //new game* = Game(gameTitle, price, currentUser.username());
                         //write new game to the csv file
                         break;
