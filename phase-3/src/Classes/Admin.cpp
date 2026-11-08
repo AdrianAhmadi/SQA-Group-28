@@ -75,6 +75,11 @@ void Admin::processRefund(string buyer, string seller, double amount, string acc
     ifstream instream;
     ofstream outstream;
 
+    if (amount <= 0){
+        cout << "Amount must be positive" << endl;
+        return;
+    }
+
     bool first = true;
     bool foundBuyer = false;
     bool foundSeller = false;
@@ -107,6 +112,7 @@ void Admin::processRefund(string buyer, string seller, double amount, string acc
             if (stod(row[2]) <= (999999.99 - amount)){
                 foundBuyer = true;
             } else {
+                cout << "Buyer would exceed fund limit" << endl;
                 return;
             }
         }
@@ -114,7 +120,7 @@ void Admin::processRefund(string buyer, string seller, double amount, string acc
             if (stod(row[2]) > amount){
                 foundSeller = true;
             } else {
-                //cout << "Error: Seller has insufficient funds to process this refund." << endl;
+                cout << "Seller has insufficient funds" << endl;
                 return;
             }
             continue;
@@ -172,6 +178,8 @@ void Admin::processRefund(string buyer, string seller, double amount, string acc
             outstream << row[0] << '_' << row[1] << '_' << row[2];
             first = false;
         }
+    } else {
+        cout << "Users not found" << endl;
     }
     instream.close();
     outstream.close();
