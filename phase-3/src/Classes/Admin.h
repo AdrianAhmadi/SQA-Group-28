@@ -8,11 +8,11 @@ class Admin : public User {
     public:
         using User::addCredit;
         void create(string username, string userType, string accounts);
-        float processRefund(Game game, User user);
+        void processRefund(string buyer, string seller, double amount);
         void OutputAccountList();
         void OutputGameList();
         void deleteUser(string username, string accounts);
-        void addCredit(string username, float credit, string accounts);
+        void addCredit(string username, double credit, string accounts);
     
         Admin(string userName);
 };

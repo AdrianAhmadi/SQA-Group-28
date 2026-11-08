@@ -70,9 +70,7 @@ void Admin::create(string username, string userType, string accounts) {
     }
 }
 
-float Admin::processRefund(Game game, User user) {
-    user.setBalance(game.getPrice());
-    return game.getPrice();
+void Admin::processRefund(string buyer, string seller, double amount) {
 }
 
 void Admin::OutputAccountList() {
@@ -159,7 +157,7 @@ void Admin::deleteUser(string username, string accounts) {
     rename(tempfile.c_str(), accounts.c_str());
 }
 
-void Admin::addCredit(string username, float credit, string accounts){
+void Admin::addCredit(string username, double credit, string accounts){
     string tempfile = ".\\data\\temp.txt";
     ifstream instream;
     ofstream outstream;
