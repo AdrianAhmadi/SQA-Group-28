@@ -172,9 +172,21 @@ int main(int argc, char* argv[]){
                         break;
                     }
                 case refund:
-                    if (session == true){
-                        //man this one is gonna suck ass I dont wanna actually do it
-                        break;
+                    if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
+                        double price;
+                        string sellerUsername;
+                        string buyerUsername;
+                        cout << "Enter buyer username:" << endl;
+                        cin >> buyerUsername;
+                        cout << "Enter seller username:" << endl;
+                        cin >> sellerUsername;
+                        cout << "Enter refund amount:" << endl;
+                        cin >> price;
+                        if (sellerUsername.length() <= 15 && buyerUsername.length() <= 15){
+                            Admin* adminUser = dynamic_cast<Admin*>(currentUser);
+                            adminUser->processRefund(buyerUsername, sellerUsername, price, accounts);
+                            //TODO: output to the daily transaction file
+                        }
                     } else {
                         //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                         break;
