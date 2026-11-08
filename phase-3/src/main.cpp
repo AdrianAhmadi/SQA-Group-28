@@ -142,9 +142,13 @@ int main(int argc, char* argv[]){
                 case buy:
                     if (session == true && dynamic_cast<StandardBuyer*>(currentUser) != nullptr){
                         string gameTitle;
+                        string sellerName;
                         cout << "Enter game name:"<< endl;
                         cin >> gameTitle;
                         cout << "Enter seller name:"<< endl;
+                        cin >> sellerName;
+                        StandardBuyer* buyer = dynamic_cast<StandardBuyer*>(currentUser);
+                        buyer->buy(gameTitle, sellerName, games, gamesCollection, accounts);
                         /*if (games database contains gameTitle && currentUser balance >= game price)
                         currentUser.buy(game)*/ 
                         break;
