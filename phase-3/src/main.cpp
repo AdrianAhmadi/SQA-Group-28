@@ -16,10 +16,10 @@
 
 using namespace std;
 
-enum Inputs {login, buy, sell, refund, create, deleteuser, addcredit, accountlist, usersearch, logout, quit};
+enum Inputs {login, buy, sell, refund, create, deleteuser, addcredit, accountlist, gamelist, usersearch, logout, quit};
 
 const map<string, Inputs> inputMap = {{"login", login}, {"buy", buy}, {"sell", sell}, {"refund", refund}, {"create", create},{"delete", deleteuser}, {"addcredit", addcredit},
-{"accountlist", accountlist}, {"search", usersearch}, {"logout", logout}, {"quit", quit}};
+{"gamelist", gamelist}, {"accountlist", accountlist}, {"search", usersearch}, {"logout", logout}, {"quit", quit}};
 
 User* userLogin(string username, string accounts){
     // Open the AccountList.csv to check if the username exists in the database, and what permissions it has
@@ -36,7 +36,9 @@ User* userLogin(string username, string accounts){
     vector<string> row; //
     string line, word, temp;
     string perms = "";
-    string formatted = username.append((15 - username.length()), ' ');
+    if (username.length() > 15) return nullptr;
+        string formatted = username;
+        formatted.append(15 - formatted.length(), ' ');
 
     while (getline(AccountList, line)){
         row.clear();
@@ -46,6 +48,10 @@ User* userLogin(string username, string accounts){
         while (getline(s, word, '_')){
             row.push_back(word);
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/phase-3-Denis
         if (row.size() >= 3 && row[0] == formatted){
 
             //convert the vector field for user perms into an integer for the switch case (this isnt strictly necessary but its simpler to do)
@@ -82,14 +88,10 @@ int main(int argc, char* argv[]){
     bool session = false;
     User* currentUser = nullptr;
     string choice = "";
-    string accounts= ".\\data\\";
-    string games = ".\\data\\"; 
-    string gamesCollection = ".\\data\\";
-    string transactionOutput = ".\\data\\";
-    accounts.append(argv[1]);
-    games.append(argv[2]);
-    gamesCollection.append(argv[3]);
-    transactionOutput.append(argv[4]);
+    string accounts = argv[1];
+    string games = argv[2];
+    string gamesCollection = argv[3];
+    string transactionOutput = argv[4];
     do
     {
         /*cout << "\nMain Menu"<< endl;
@@ -108,21 +110,20 @@ int main(int argc, char* argv[]){
         }
         cout << "quit"<< endl;
         cout << "Select a function you would like to perform: ";*/
-        cin >> choice;
+        if (!(cin >> choice)){
+            break;
+        }
+
         for (auto& x : choice){
             x = tolower(x);
         }
-        if (cin.fail()){
-            //cout << "Error: Input invalid."<< endl;
-            cin.clear();
-            continue;
-        }
+
         auto command = inputMap.find(choice);
         if (command != inputMap.end()){
             switch (command->second){
                 case login:
                     if (session == false){
-                        cout << "Enter your username:" << endl;
+                        cout << "Enter username:" << endl;
                         string username = "";
                         cin >> username;
                         currentUser = userLogin(username, accounts);
@@ -145,7 +146,7 @@ int main(int argc, char* argv[]){
                         string sellerName;
                         cout << "Enter game name:"<< endl;
                         cin >> gameTitle;
-                        cout << "Enter seller name:"<< endl;
+                        cout << "Enter seller username:"<< endl;
                         cin >> sellerName;
                         StandardBuyer* buyer = dynamic_cast<StandardBuyer*>(currentUser);
                         buyer->buy(gameTitle, sellerName, games, gamesCollection, accounts);
@@ -174,8 +175,12 @@ int main(int argc, char* argv[]){
                         break;
                     }
                 case refund:
+<<<<<<< HEAD
                     if (session == true){
                         //man this one is gonna suck ass I dont wanna actually do it
+=======
+                    if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
+>>>>>>> origin/phase-3-Denis
                         double price;
                         string sellerUsername;
                         string buyerUsername;
@@ -189,10 +194,14 @@ int main(int argc, char* argv[]){
                             Admin* adminUser = dynamic_cast<Admin*>(currentUser);
                             adminUser->processRefund(buyerUsername, sellerUsername, price, accounts);
                             //TODO: output to the daily transaction file
+<<<<<<< HEAD
                         } else {
                             //cout << "\nInvalid input: please try again.";
                         }
                         break;
+=======
+                        }
+>>>>>>> origin/phase-3-Denis
                     } else {
                         //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                         break;
@@ -242,8 +251,9 @@ int main(int argc, char* argv[]){
                         string toCredit;
                         double amount;
                         cout << "Enter username:" << endl;
-                        cin >> amount;
+                        cin >> toCredit;
                         cout << "Enter amount:" << endl;
+                        cin >> amount;
                         Admin* adminUser = dynamic_cast<Admin*>(currentUser);
                         adminUser->addCredit(toCredit, amount, accounts);
                         //TODO: output to the daily transaction file
@@ -260,10 +270,17 @@ int main(int argc, char* argv[]){
                     if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                         //for (users in userlist){cout << userlist.username}
                         Admin* adminUser = dynamic_cast<Admin*>(currentUser);
-                        adminUser->OutputAccountList();
+                        adminUser->OutputAccountList(accounts);
                         break;
                     } else {
                         //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        break;
+                    }
+                case gamelist:
+                    if (session == true && currentUser != nullptr){
+                        currentUser->OutputGameList(accounts);
+                        break;
+                    } else {
                         break;
                     }
                 case usersearch:
@@ -292,6 +309,7 @@ int main(int argc, char* argv[]){
                     break;
             }
         } 
-    }    while (choice != "quit");
+    } while (choice != "quit");
+
     return 0;
 }

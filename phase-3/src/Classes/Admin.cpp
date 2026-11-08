@@ -72,6 +72,7 @@ void Admin::create(string username, string userType, string accounts) {
 
 void Admin::processRefund(string buyer, string seller, double amount, string accounts) {
     string tempfile = ".\\data\\temp.txt";
+<<<<<<< HEAD
     ifstream instream;
     ofstream outstream;
 
@@ -184,23 +185,122 @@ void Admin::processRefund(string buyer, string seller, double amount, string acc
 }
 
 void Admin::OutputAccountList() {
+=======
+>>>>>>> origin/phase-3-Denis
     ifstream instream;
-    instream.open(".\\data\\currentaccounts.txt");
+    ofstream outstream;
+
+    bool first = true;
+    bool foundBuyer = false;
+    bool foundSeller = false;
+    vector<string> row;
+    string line, word, temp;
+    string formattedBuyer = buyer.append((15 - buyer.length()), ' ');
+    string formattedSeller = seller.append((15 - seller.length()), ' ');
+
+    instream.open(accounts);
+
     if (!instream.is_open()){
         cerr << "Error: Could not open account file." << endl;
         return;
     }
-    
-    string line;
+
+    outstream.open(tempfile);
+
+    if (!outstream.is_open()){
+        cerr << "Error: Could not open account file." << endl;
+    }
 
     while(getline(instream, line)){
-        cout << line << endl;
+        row.clear();
+        stringstream s(line);
+
+        while(getline(s, word, '_')){
+            row.push_back(word);
+        }
+        if (row[0] == formattedBuyer){
+            if (stod(row[2]) <= (999999.99 - amount)){
+                foundBuyer = true;
+            } else {
+                return;
+            }
+        }
+        if (row[0] == formattedSeller){
+            if (stod(row[2]) > amount){
+                foundSeller = true;
+            } else {
+                //cout << "Error: Seller has insufficient funds to process this refund." << endl;
+                return;
+            }
+            continue;
+        }
+    }
+    instream.close();
+    instream.open(accounts);
+    
+    if (foundBuyer == true && foundSeller == true){
+        while(getline(instream, line)){
+            row.clear();
+            stringstream s2(line);
+
+            while(getline(s2, word, '_')){
+                row.push_back(word);
+            }
+            if (row.size() >= 3 && row[0] == formattedBuyer){
+                double total = stod(row[2]) + amount;
+                if (total > 999999.99){
+                    //cout << "Error: account would exceed total credit limit." << endl;
+                    instream.close();
+                    outstream.close();
+                    remove(tempfile.c_str());
+                    return;
+                } else {
+                    stringstream ss;
+                    ss << fixed << setprecision(2) << total;
+                    string newval = ss.str();
+                    string zeros = "";
+                    zeros.append(9 - newval.length(), '0');
+                    zeros.append(newval);
+                    row[2] = zeros;
+                }
+            } else if (row.size() >= 3 && row[0] == formattedSeller){
+                double total = stod(row[2]) - amount;
+                if (total < 0){
+                    //cout << "Error: account would exceed total credit limit." << endl;
+                    instream.close();
+                    outstream.close();
+                    remove(tempfile.c_str());
+                    return;
+                } else {
+                    stringstream ss;
+                    ss << fixed << setprecision(2) << total;
+                    string newval = ss.str();
+                    string zeros = "";
+                    zeros.append(9 - newval.length(), '0');
+                    zeros.append(newval);
+                    row[2] = zeros;
+                }
+            }
+            if (first == false){
+                outstream << '\n';
+            }
+            outstream << row[0] << '_' << row[1] << '_' << row[2];
+            first = false;
+        }
+    }
+    instream.close();
+    outstream.close();
+    if (foundBuyer == true && foundSeller == true){
+        remove(accounts.c_str());
+        rename(tempfile.c_str(), accounts.c_str());
+    } else {
+        remove(tempfile.c_str());
     }
 }
 
-void Admin::OutputGameList() {
+void Admin::OutputAccountList(string accounts) {
     ifstream instream;
-    instream.open(".\\data\\availablegames.txt");
+    instream.open(accounts);
     if (!instream.is_open()){
         cerr << "Error: Could not open account file." << endl;
         return;
@@ -214,7 +314,7 @@ void Admin::OutputGameList() {
 }
 
 void Admin::deleteUser(string username, string accounts) {
-    string tempfile = ".\\data\\temp.txt";
+    string tempfile = "./data/temp.txt";
     ifstream instream;
     ofstream outstream;
 
@@ -267,8 +367,13 @@ void Admin::deleteUser(string username, string accounts) {
     rename(tempfile.c_str(), accounts.c_str());
 }
 
+<<<<<<< HEAD
 void Admin::addCredit(string username, double credit, string accounts){
     string tempfile = ".\\data\\temp.txt";
+=======
+void Admin::addCredit(string username, float credit, string accounts){
+    string tempfile = "./data/temp.txt";
+>>>>>>> origin/phase-3-Denis
     ifstream instream;
     ofstream outstream;
 

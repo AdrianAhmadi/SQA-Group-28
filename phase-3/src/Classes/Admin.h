@@ -9,7 +9,7 @@ class Admin : public User {
         using User::addCredit;
         void create(string username, string userType, string accounts);
         void processRefund(string buyer, string seller, double amount, string accounts);
-        void OutputAccountList();
+        void OutputAccountList(string accounts);
         void OutputGameList();
         void deleteUser(string username, string accounts);
         void addCredit(string username, double credit, string accounts);

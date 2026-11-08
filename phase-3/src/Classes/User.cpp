@@ -1,11 +1,14 @@
 #include "User.h"
 #include <iostream>
 #include <fstream>
+<<<<<<< HEAD
 #include <sstream>
 #include <string>
 #include <cstdio>
 #include <iomanip>
 #include <vector>
+=======
+>>>>>>> origin/phase-3-Denis
 using namespace std;
 
 void User::addCredit(float credit, string accounts) {
@@ -110,4 +113,19 @@ float User::getBalance() {
 
 string User::getUserName() {
     return this->userName;
+}
+
+void User::OutputGameList(string games){
+    ifstream instream;
+    instream.open(games);
+    if (!instream.is_open()){
+        cerr << "Error: Could not open account file." << endl;
+        return;
+    }
+    
+    string line;
+
+    while(getline(instream, line)){
+        cout << line << endl;
+    }
 }

@@ -30,7 +30,7 @@ void StandardBuyer::buy(string gameTitle, string sellerName, string gamesFilePat
 
     bool gameFound = false;
     float gamePrice = 0.0f;
-    string tempGamesFile = ".\\data\\temp_availablegames.txt";
+    string tempGamesFile = "./data/temp_availablegames.txt";
 
     instream.open(gamesFilePath);
     outstream.open(tempGamesFile); // write into temp file
@@ -68,7 +68,7 @@ void StandardBuyer::buy(string gameTitle, string sellerName, string gamesFilePat
     }
 
     // check buyer and seller balances
-    string tempAccountsFile = ".\\data\\temp_accounts.txt";
+    string tempAccountsFile = "./data/temp_accounts.txt";
     bool buyerFound = false;
     bool sellerFound = false;
     float buyerBalance = 0.0f;

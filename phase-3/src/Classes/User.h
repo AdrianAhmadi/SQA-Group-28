@@ -14,4 +14,5 @@ class User {
         void setBalance(float amount);
         float getBalance();
         string getUserName();
+        void OutputGameList(string games);
 };
