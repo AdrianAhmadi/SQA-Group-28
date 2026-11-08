@@ -40,6 +40,7 @@ void StandardBuyer::buy(string gameTitle, string sellerName, string gamesFilePat
         return;
     }
 
+    // find the game to buy
     while (getline(instream, line)) {
         row.clear();
         stringstream s(line);
