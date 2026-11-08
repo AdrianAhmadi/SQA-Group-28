@@ -8,7 +8,7 @@ class Admin : public User {
     public:
         using User::addCredit;
         void create(string username, string userType, string accounts);
-        void processRefund(string buyer, string seller, double amount);
+        void processRefund(string buyer, string seller, double amount, string accounts);
         void OutputAccountList();
         void OutputGameList();
         void deleteUser(string username, string accounts);

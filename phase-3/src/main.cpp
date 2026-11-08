@@ -46,9 +46,6 @@ User* userLogin(string username, string accounts){
         while (getline(s, word, '_')){
             row.push_back(word);
         }
-        
-        cout << formatted;
-        cout << row[0];
         if (row.size() >= 3 && row[0] == formatted){
 
             //convert the vector field for user perms into an integer for the switch case (this isnt strictly necessary but its simpler to do)
@@ -190,7 +187,7 @@ int main(int argc, char* argv[]){
                         cin >> price;
                         if (sellerUsername.length() <= 15 && buyerUsername.length() <= 15){
                             Admin* adminUser = dynamic_cast<Admin*>(currentUser);
-                            adminUser->processRefund(buyerUsername, sellerUsername, price);
+                            adminUser->processRefund(buyerUsername, sellerUsername, price, accounts);
                             //TODO: output to the daily transaction file
                         } else {
                             //cout << "\nInvalid input: please try again.";
