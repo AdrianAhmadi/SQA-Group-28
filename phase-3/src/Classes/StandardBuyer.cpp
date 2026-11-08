@@ -57,13 +57,13 @@ void StandardBuyer::buy(string gameTitle, string sellerName, string gamesFilePat
     instream.close();
 
     if (!gameFound) {
-        //cout << "Error: Game not found or seller mismatch." << endl;
+        cout << "Game or seller not found" << endl;
         return;
     }
 
     // Check if buyer is trying to buy their own game
     if (getUserName() == sellerName) {
-        //cout << "Error: Cannot buy your own game." << endl;
+        cout << "Cannot buy own game" << endl;
         return;
     }
 
@@ -106,12 +106,12 @@ void StandardBuyer::buy(string gameTitle, string sellerName, string gamesFilePat
     }
 
     if (buyerBalance < gamePrice) {
-        //cout << "Error: Insufficient funds." << endl;
+        cout << "Insufficient funds" << endl;
         return;
     }
 
     if (sellerBalance + gamePrice > 999999.99) {
-        //cout << "Error: Seller credit overflow." << endl;
+        cout << "Seller credit overflow" << endl;
         return;
     }
 
