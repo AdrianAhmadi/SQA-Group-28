@@ -48,10 +48,7 @@ User* userLogin(string username, string accounts){
         while (getline(s, word, '_')){
             row.push_back(word);
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/phase-3-Denis
+        
         if (row.size() >= 3 && row[0] == formatted){
 
             //convert the vector field for user perms into an integer for the switch case (this isnt strictly necessary but its simpler to do)
@@ -175,12 +172,7 @@ int main(int argc, char* argv[]){
                         break;
                     }
                 case refund:
-<<<<<<< HEAD
-                    if (session == true){
-                        //man this one is gonna suck ass I dont wanna actually do it
-=======
                     if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
->>>>>>> origin/phase-3-Denis
                         double price;
                         string sellerUsername;
                         string buyerUsername;
@@ -194,14 +186,7 @@ int main(int argc, char* argv[]){
                             Admin* adminUser = dynamic_cast<Admin*>(currentUser);
                             adminUser->processRefund(buyerUsername, sellerUsername, price, accounts);
                             //TODO: output to the daily transaction file
-<<<<<<< HEAD
-                        } else {
-                            //cout << "\nInvalid input: please try again.";
                         }
-                        break;
-=======
-                        }
->>>>>>> origin/phase-3-Denis
                     } else {
                         //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
                         break;
