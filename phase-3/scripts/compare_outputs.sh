@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 
 set -u
@@ -25,13 +24,15 @@ while IFS= read -r EXPECTED_FILE; do
         continue
     fi
 
-    if diff -q "$EXPECTED_FILE" "$ACTUAL_FILE" > /dev/null; then
+    # --strip-trailing-cr: expected files have Windows (CRLF) line endings,
+    # program output has Linux (LF) endings. Ignore that difference.
+    if diff -q --strip-trailing-cr "$EXPECTED_FILE" "$ACTUAL_FILE" > /dev/null; then
         echo "  PASS"
         PASSED=$((PASSED + 1))
     else
         echo "  FAIL: Files differ."
         FAILED=$((FAILED + 1))
-        diff -u "$EXPECTED_FILE" "$ACTUAL_FILE"
+        diff -u --strip-trailing-cr "$EXPECTED_FILE" "$ACTUAL_FILE"
     fi
 
 done < <(find "$EXPECTED_DIR" -type f \( -name "*.out" -o -name "*.atf" \) | sort)

@@ -77,7 +77,7 @@ float Admin::processRefund(Game game, User user) {
 
 void Admin::OutputAccountList() {
     ifstream instream;
-    instream.open(".\\data\\currentaccounts.txt");
+    instream.open("./data/currentaccounts.txt");
     if (!instream.is_open()){
         cerr << "Error: Could not open account file." << endl;
         return;
@@ -92,7 +92,7 @@ void Admin::OutputAccountList() {
 
 void Admin::OutputGameList() {
     ifstream instream;
-    instream.open(".\\data\\availablegames.txt");
+    instream.open("./data/availablegames.txt");
     if (!instream.is_open()){
         cerr << "Error: Could not open account file." << endl;
         return;
@@ -106,7 +106,7 @@ void Admin::OutputGameList() {
 }
 
 void Admin::deleteUser(string username, string accounts) {
-    string tempfile = ".\\data\\temp.txt";
+    string tempfile = "./data/temp.txt";
     ifstream instream;
     ofstream outstream;
 
@@ -160,7 +160,7 @@ void Admin::deleteUser(string username, string accounts) {
 }
 
 void Admin::addCredit(string username, float credit, string accounts){
-    string tempfile = ".\\data\\temp.txt";
+    string tempfile = "./data/temp.txt";
     ifstream instream;
     ofstream outstream;
 

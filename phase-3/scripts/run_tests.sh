@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 
 set -u
@@ -16,6 +15,13 @@ if [[ ! -x "$EXECUTABLE" ]]; then
     echo "ERROR: Executable not found or not executable: $EXECUTABLE"
     exit 1
 fi
+
+for FILE in "$ACCOUNTS" "$GAMES" "$COLLECTION"; do
+    if [[ ! -f "$FILE" ]]; then
+        echo "ERROR: Required data file not found: $FILE"
+        exit 1
+    fi
+done
 
 mkdir -p "$OUTPUT_DIR"
 
@@ -49,10 +55,51 @@ while IFS= read -r INPUT_FILE; do
         continue
     fi
 
-    "$EXECUTABLE" "$ACCOUNTS" "$GAMES" "$COLLECTION" "$ACTUAL_ATF" \
-        < "$INPUT_FILE" > "$ACTUAL_OUT" 2>&1
+    # Create an isolated working directory for this test.
+    TEST_WORK_DIR="$(mktemp -d)"
+
+    if [[ ! -d "$TEST_WORK_DIR" ]]; then
+        echo "  ERROR: Could not create temporary directory."
+        FAILED=$((FAILED + 1))
+        continue
+    fi
+
+    # Create the data directory used by the executable arguments.
+    mkdir -p "$TEST_WORK_DIR/data"
+
+    # Copy original data into the isolated directory.
+    cp "$ACCOUNTS" "$TEST_WORK_DIR/data/currentaccounts.txt"
+    cp "$GAMES" "$TEST_WORK_DIR/data/availablegames.txt"
+    cp "$COLLECTION" "$TEST_WORK_DIR/data/gamescollection.txt"
+
+    # Create copies for the Windows-style paths used in the C++ files.
+    # On Linux, these are literal filenames in the working directory.
+    cp "$ACCOUNTS" "$TEST_WORK_DIR/.\\data\\currentaccounts.txt"
+    cp "$GAMES" "$TEST_WORK_DIR/.\\data\\availablegames.txt"
+    cp "$COLLECTION" "$TEST_WORK_DIR/.\\data\\gamescollection.txt"
+
+    cp "$ACCOUNTS" "$TEST_WORK_DIR/.\\data\\temp_accounts.txt"
+    cp "$GAMES" "$TEST_WORK_DIR/.\\data\\temp_availablegames.txt"
+
+    : > "$TEST_WORK_DIR/.\\data\\temp.txt"
+
+    # Run the test from its isolated working directory.
+    (
+        cd "$TEST_WORK_DIR" || exit 1
+
+        "$EXECUTABLE" \
+            "$TEST_WORK_DIR/data/currentaccounts.txt" \
+            "$TEST_WORK_DIR/data/availablegames.txt" \
+            "$TEST_WORK_DIR/data/gamescollection.txt" \
+            "$ACTUAL_ATF" \
+            < "$INPUT_FILE" \
+            > "$ACTUAL_OUT" 2>&1
+    )
 
     EXIT_CODE=$?
+
+    # Remove all temporary data after the test.
+    rm -rf "$TEST_WORK_DIR"
 
     if [[ $EXIT_CODE -ne 0 ]]; then
         echo "  ERROR: Program exited with code $EXIT_CODE."

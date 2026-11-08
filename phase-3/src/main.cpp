@@ -36,7 +36,9 @@ User* userLogin(string username, string accounts){
     vector<string> row; //
     string line, word, temp;
     string perms = "";
-    string formatted = username.append((15 - username.length()), ' ');
+    if (username.length() > 15) return nullptr;
+        string formatted = username;
+        formatted.append(15 - formatted.length(), ' ');
 
     while (getline(AccountList, line)){
         row.clear();
@@ -46,9 +48,7 @@ User* userLogin(string username, string accounts){
         while (getline(s, word, '_')){
             row.push_back(word);
         }
-        
-        cout << formatted;
-        cout << row[0];
+
         if (row.size() >= 3 && row[0] == formatted){
 
             //convert the vector field for user perms into an integer for the switch case (this isnt strictly necessary but its simpler to do)
@@ -85,14 +85,10 @@ int main(int argc, char* argv[]){
     bool session = false;
     User* currentUser = nullptr;
     string choice = "";
-    string accounts= ".\\data\\";
-    string games = ".\\data\\"; 
-    string gamesCollection = ".\\data\\";
-    string transactionOutput = ".\\data\\";
-    accounts.append(argv[1]);
-    games.append(argv[2]);
-    gamesCollection.append(argv[3]);
-    transactionOutput.append(argv[4]);
+    string accounts = argv[1];
+    string games = argv[2];
+    string gamesCollection = argv[3];
+    string transactionOutput = argv[4];
     do
     {
         /*cout << "\nMain Menu"<< endl;
@@ -111,21 +107,20 @@ int main(int argc, char* argv[]){
         }
         cout << "quit"<< endl;
         cout << "Select a function you would like to perform: ";*/
-        cin >> choice;
+        if (!(cin >> choice)){
+            break;
+        }
+
         for (auto& x : choice){
             x = tolower(x);
         }
-        if (cin.fail()){
-            //cout << "Error: Input invalid."<< endl;
-            cin.clear();
-            continue;
-        }
+
         auto command = inputMap.find(choice);
         if (command != inputMap.end()){
             switch (command->second){
                 case login:
                     if (session == false){
-                        cout << "Enter your username:" << endl;
+                        cout << "Enter username:" << endl;
                         string username = "";
                         cin >> username;
                         currentUser = userLogin(username, accounts);
@@ -148,7 +143,7 @@ int main(int argc, char* argv[]){
                         string sellerName;
                         cout << "Enter game name:"<< endl;
                         cin >> gameTitle;
-                        cout << "Enter seller name:"<< endl;
+                        cout << "Enter seller username:"<< endl;
                         cin >> sellerName;
                         StandardBuyer* buyer = dynamic_cast<StandardBuyer*>(currentUser);
                         buyer->buy(gameTitle, sellerName, games, gamesCollection, accounts);
@@ -229,8 +224,9 @@ int main(int argc, char* argv[]){
                         string toCredit;
                         double amount;
                         cout << "Enter username:" << endl;
-                        cin >> amount;
+                        cin >> toCredit;
                         cout << "Enter amount:" << endl;
+                        cin >> amount;
                         Admin* adminUser = dynamic_cast<Admin*>(currentUser);
                         adminUser->addCredit(toCredit, amount, accounts);
                         //TODO: output to the daily transaction file
@@ -276,6 +272,7 @@ int main(int argc, char* argv[]){
                     break;
             }
         } 
-    }    while (choice != "quit");
+    } while (choice != "quit");
+
     return 0;
 }
