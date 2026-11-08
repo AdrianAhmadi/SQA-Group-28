@@ -18,6 +18,7 @@ void Admin::create(string username, string userType, string accounts) {
     vector<string> row;
     string line, word, temp;
     vector<string> perms = {"AA", "BS", "SS", "FS"};
+    string formatted = username.append((15 - username.length()), ' ');
 
     for (auto& x : userType){
         x = toupper(x);
@@ -34,10 +35,10 @@ void Admin::create(string username, string userType, string accounts) {
         row.clear();
         stringstream s(line);
 
-        while(getline(s, word, ',')){
+        while(getline(s, word, '_')){
             row.push_back(word);
         }
-        if (row[0] == username){
+        if (row[0] == formatted){
             found = true;
             continue;
         }
@@ -58,7 +59,7 @@ void Admin::create(string username, string userType, string accounts) {
                     cout << "Error: Could not open file." << endl;
                     return;
                 }
-                outstream << '\n' << username << ',' << 0.00 << ',' << perms[i];
+                outstream << '\n' << formatted << '_' << perms[i] << "_000000.00";
                 outstream.close();
                 //cout << "User successfully created." << endl;
                 return;
@@ -113,7 +114,7 @@ void Admin::deleteUser(string username, string accounts) {
     bool found = false;
     vector<string> row;
     string line, word, temp;
-
+    string formatted = username.append((15 - username.length()), ' ');
 
     instream.open(accounts);
     outstream.open(tempfile);
@@ -132,10 +133,10 @@ void Admin::deleteUser(string username, string accounts) {
         row.clear();
         stringstream s(line);
 
-        while(getline(s, word, ',')){
+        while(getline(s, word, '_')){
             row.push_back(word);
         }
-        if (row[0] == username){
+        if (row[0] == formatted){
             //cout << "User deleted." << endl;
             found = true;
             continue;
@@ -168,6 +169,7 @@ void Admin::addCredit(string username, float credit, string accounts){
     vector<string> row;
     string line, word, temp;
     double total;
+    string formatted = username.append((15 - username.length()), ' ');
 
     instream.open(accounts);
     outstream.open(tempfile);
@@ -192,21 +194,26 @@ void Admin::addCredit(string username, float credit, string accounts){
         if (row.size() < 3){
             continue;
         }
-        if (row.size() >= 3 && row[0] == username){
-            total = stod(row[1]) + credit;
+        
+        if (row.size() >= 3 && row[0] == formatted){
+            total = stod(row[2]) + credit;
             if (total > 999999.99){
                 //cout << "Error: account would exceed total credit limit." << endl;
             } else {
                 stringstream ss;
                 ss << fixed << setprecision(2) << total;
-                row[1] = ss.str();
+                string newval = ss.str();
+                string zeros = "";
+                zeros.append('0', 9 - newval.length());
+                zeros.append(newval);
+                row[2] = zeros;
             }
             found = true;
         }
         if (first == false){
             outstream << '\n';
         }
-        outstream << row[0] << ',' << row[1] << ',' << row[2];
+        outstream << row[0] << '_' << row[1] << '_' << row[2];
         first = false;
     }
     instream.close();

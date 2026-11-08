@@ -1,6 +1,6 @@
-Admin001,1000.00,AA
-User001,100.00,FS
-User002,999999.50,FS
-Seller001,0.00,SS
-Seller002,999999.50,SS
-Buyer001,15.00,BS
+Admin001       _AA_001000.00
+User001        _FS_000100.00
+User002        _FS_999999.50
+Seller001      _SS_000000.00
+Seller002      _SS_999999.50
+Buyer001       _BS_000015.00

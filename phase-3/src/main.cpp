@@ -36,19 +36,23 @@ User* userLogin(string username, string accounts){
     vector<string> row; //
     string line, word, temp;
     string perms = "";
+    string formatted = username.append((15 - username.length()), ' ');
 
     while (getline(AccountList, line)){
         row.clear();
 
         stringstream s(line);
 
-        while (getline(s, word, ',')){
+        while (getline(s, word, '_')){
             row.push_back(word);
         }
+        
+        cout << formatted;
+        cout << row[0];
+        if (row.size() >= 3 && row[0] == formatted){
 
-        if (row.size() >= 3 && row[0] == username){
             //convert the vector field for user perms into an integer for the switch case (this isnt strictly necessary but its simpler to do)
-            perms = row[2];
+            perms = row[1];
 
             //switch case decides which constructor is called based on the permissions flag in the accountlist
             if (perms == "AA"){
@@ -71,8 +75,6 @@ User* userLogin(string username, string accounts){
     }
     return currentUser;
 }
-
-
 
 int main(int argc, char* argv[]){
     if (argc != 5){
@@ -132,6 +134,7 @@ int main(int argc, char* argv[]){
                             //cout << "Login failed: no such user found." << endl;
                         } else {
                             //cout << "Login successful." << endl;
+                            //ofstream log(transactionOutput, ios::trunc);
                             session = true;
                         }
                         break;
