@@ -32,11 +32,15 @@ User* userLogin(string username, string accounts){
     }
 
     //placeholder variables that are used within the while loop
+    bool found = false;
     User* currentUser = nullptr;
     vector<string> row; //
     string line, word, temp;
     string perms = "";
-    if (username.length() > 15) return nullptr;
+    if (username.length() > 15){ 
+        cout << "Username too long" << endl;
+        return nullptr;
+    }
         string formatted = username;
         formatted.append(15 - formatted.length(), ' ');
 
@@ -53,7 +57,7 @@ User* userLogin(string username, string accounts){
 
             //convert the vector field for user perms into an integer for the switch case (this isnt strictly necessary but its simpler to do)
             perms = row[1];
-
+            found = true;
             //switch case decides which constructor is called based on the permissions flag in the accountlist
             if (perms == "AA"){
                 currentUser = new Admin(username);
@@ -73,6 +77,7 @@ User* userLogin(string username, string accounts){
             }
         }
     }
+    if (found == false) cout << "User not found" << endl;
     return currentUser;
 }
 
@@ -134,7 +139,7 @@ int main(int argc, char* argv[]){
                         }
                         break;
                     } else {
-                        //cout << "\nError: not a valid input. A user is already logged in"<< endl;
+                        //cout << "Permission denied"<< endl;
                         break;
                     }
                 case buy:
@@ -151,7 +156,7 @@ int main(int argc, char* argv[]){
                         currentUser.buy(game)*/ 
                         break;
                     } else {
-                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        cout << "Permission denied"<< endl;
                         break;
                     }
                 case sell:
@@ -168,7 +173,7 @@ int main(int argc, char* argv[]){
                         //write new game to the csv file
                         break;
                     } else {
-                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        cout << "Permission denied"<< endl;
                         break;
                     }
                 case refund:
@@ -188,7 +193,7 @@ int main(int argc, char* argv[]){
                             //TODO: output to the daily transaction file
                         }
                     } else {
-                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        cout << "Permission denied"<< endl;
                         break;
                     }
                 case create:
@@ -210,7 +215,7 @@ int main(int argc, char* argv[]){
                         }
                         break;
                     } else {
-                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        cout << "Permission denied"<< endl;
                         break;
                     }
                 case deleteuser:
@@ -228,7 +233,7 @@ int main(int argc, char* argv[]){
                         }
                         break;
                     } else {
-                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        cout << "Permission denied"<< endl;
                         break;
                     }
                 case addcredit:
@@ -258,7 +263,7 @@ int main(int argc, char* argv[]){
                         adminUser->OutputAccountList(accounts);
                         break;
                     } else {
-                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        cout << "Permission denied"<< endl;
                         break;
                     }
                 case gamelist:
@@ -268,12 +273,12 @@ int main(int argc, char* argv[]){
                     } else {
                         break;
                     }
-                case usersearch:
+                case usersearch: //TODO: implement this (we didnt)
                     if(session == true){
                         //print the thingy
                         break;
                     } else{
-                        //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        //print the other thingy
                         break;
                     }
                 case logout:

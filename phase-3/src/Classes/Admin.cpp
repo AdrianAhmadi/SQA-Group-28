@@ -244,7 +244,7 @@ void Admin::deleteUser(string username, string accounts) {
     outstream.close();
 
     if (found == false){
-        //cout << "No such user found." << endl;
+        cout << "User not found" << endl;
         remove(tempfile.c_str());
         return;
     }
