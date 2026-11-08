@@ -53,13 +53,13 @@ void StandardSeller::sell(string gameTitle, float price, string sellerName, stri
 
     if (found == false) {
         outstream.open(gamesFilePath, ios::app);
-                if (!outstream.is_open()){
-                    cout << "Error: Could not open file." << endl;
-                    return;
-                }
-                outstream << '\n'  << price << gameTitle << sellerName;
-                outstream.close();
-                //cout << "Game is now up for sale" << endl;
-                return;
+        if (!outstream.is_open()){
+            cout << "Error: Could not open file." << endl;
+            return;
+        }
+        outstream << '\n'  << price << gameTitle << sellerName;
+        outstream.close();
+        //cout << "Game is now up for sale" << endl;
+        return;
     }
 }

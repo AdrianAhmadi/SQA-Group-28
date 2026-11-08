@@ -10,7 +10,7 @@ class User {
     public:
         User(string userName);
         virtual ~User() = default;
-        virtual void addCredit();
+        virtual void addCredit(float credit, string accounts);
         void setBalance(float amount);
         float getBalance();
         string getUserName();

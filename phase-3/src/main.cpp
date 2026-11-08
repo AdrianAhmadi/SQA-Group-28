@@ -249,8 +249,11 @@ int main(int argc, char* argv[]){
                         //TODO: output to the daily transaction file
                         break;
                     } else {
+                        double amount;
+                        cout << "Enter amount:" << endl;
+                        cin >> amount;
                         //do the other version of add credit
-
+                        currentUser->addCredit(amount, accounts);
                         break;
                     }
                 case accountlist:
