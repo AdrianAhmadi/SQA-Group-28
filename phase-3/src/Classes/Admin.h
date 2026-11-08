@@ -9,8 +9,7 @@ class Admin : public User {
         using User::addCredit;
         void create(string username, string userType, string accounts);
         float processRefund(Game game, User user);
-        void OutputAccountList();
-        void OutputGameList();
+        void OutputAccountList(string accounts);
         void deleteUser(string username, string accounts);
         void addCredit(string username, float credit, string accounts);
     

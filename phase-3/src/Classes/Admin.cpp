@@ -75,24 +75,9 @@ float Admin::processRefund(Game game, User user) {
     return game.getPrice();
 }
 
-void Admin::OutputAccountList() {
+void Admin::OutputAccountList(string accounts) {
     ifstream instream;
-    instream.open("./data/currentaccounts.txt");
-    if (!instream.is_open()){
-        cerr << "Error: Could not open account file." << endl;
-        return;
-    }
-    
-    string line;
-
-    while(getline(instream, line)){
-        cout << line << endl;
-    }
-}
-
-void Admin::OutputGameList() {
-    ifstream instream;
-    instream.open("./data/availablegames.txt");
+    instream.open(accounts);
     if (!instream.is_open()){
         cerr << "Error: Could not open account file." << endl;
         return;

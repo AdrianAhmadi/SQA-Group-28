@@ -16,10 +16,10 @@
 
 using namespace std;
 
-enum Inputs {login, buy, sell, refund, create, deleteuser, addcredit, accountlist, usersearch, logout, quit};
+enum Inputs {login, buy, sell, refund, create, deleteuser, addcredit, accountlist, gamelist, usersearch, logout, quit};
 
 const map<string, Inputs> inputMap = {{"login", login}, {"buy", buy}, {"sell", sell}, {"refund", refund}, {"create", create},{"delete", deleteuser}, {"addcredit", addcredit},
-{"accountlist", accountlist}, {"search", usersearch}, {"logout", logout}, {"quit", quit}};
+{"gamelist", gamelist}, {"accountlist", accountlist}, {"search", usersearch}, {"logout", logout}, {"quit", quit}};
 
 User* userLogin(string username, string accounts){
     // Open the AccountList.csv to check if the username exists in the database, and what permissions it has
@@ -240,10 +240,17 @@ int main(int argc, char* argv[]){
                     if (session == true && dynamic_cast<Admin*>(currentUser) != nullptr){
                         //for (users in userlist){cout << userlist.username}
                         Admin* adminUser = dynamic_cast<Admin*>(currentUser);
-                        adminUser->OutputAccountList();
+                        adminUser->OutputAccountList(accounts);
                         break;
                     } else {
                         //cout << "\nError: not a valid input. You do not have sufficient permissions."<< endl;
+                        break;
+                    }
+                case gamelist:
+                    if (session == true && currentUser != nullptr){
+                        //currentUser->OutputGameList();
+                        break;
+                    } else {
                         break;
                     }
                 case usersearch:
