@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.text.DecimalFormat;
 
 public class Backend {
 
@@ -129,7 +130,7 @@ public class Backend {
             if (this.AccountList.containsKey(username) == true){
                 this.AccountList.remove(username);
             } else {
-                System.out.println("ERROR: User does not exist.");
+                System.out.println("ERROR: User does not exist");
             }
         }
 
@@ -144,7 +145,31 @@ public class Backend {
         }
 
         public void buy(int index){
+            String transaction = this.TransactionList.get(index);
+            String gamename = transaction.substring(3, 29);
+            int sellerNameEnd = transaction.indexOf(" ", 30);
+            String sellerName = transaction.substring(30, sellerNameEnd);
+            int buyerNameEnd = transaction.indexOf(" ", 45);
+            String buyerName = transaction.substring(45, buyerNameEnd);
+            String priceStr = transaction.substring(61, transaction.length()-1);
+            Double price = Double.parseDouble(priceStr);
+            Double buyerBalance = Double.parseDouble(this.AccountList.get(buyerName)[1]);
+            Double sellerBalance = Double.parseDouble(this.AccountList.get(sellerName)[1]);
+            if (price < buyerBalance){
+                DecimalFormat df = new DecimalFormat("000.00");
 
+                buyerBalance -= price;
+                this.AccountList.get(buyerName)[1] = df.format(buyerBalance);
+
+                sellerBalance += price;
+                this.AccountList.get(sellerName)[1] = df.format(sellerBalance);
+
+                int count = 15 - buyerName.length();
+                String collectionItem = gamename + ' ' + buyerName + String.valueOf(' ').repeat(count);
+                this.GameCollection.add(collectionItem);
+            } else {
+                System.out.println("ERROR: User balance cannot be negative");
+            }
         }
 
         public void refund(int index){
