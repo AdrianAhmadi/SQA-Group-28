@@ -3,16 +3,13 @@ import java.util.*;
 import java.text.DecimalFormat;
 
 public class Backend {
+    static String TransactionFile = "transout.atf";
+    static String AccountList = "data\\currentaccounts.txt";
+    static String GameList = "data\\availablegames.txt";
+    static String GameCollection = "data\\gamescollection.txt";
 
     public static void main(String[] args) {
-
-        if (args.length == 4){
-            String TransactionFile = args[0];
-            String AccountList = args[1];
-            String GameList = args[2];
-            String GameCollection = args[3];
-
-            TransactionManager manager = new TransactionManager();
+        TransactionManager manager = new TransactionManager();
 
 
             manager.setAccountList(TextInterpreter.ReadAccountsFile(AccountList));
@@ -28,10 +25,9 @@ public class Backend {
                 }
             }
 
-        } else {
-            System.out.println("TODO: Add real error message here");
-        }
-        
+            if (TextFilePrinter.createFiles(manager.getAccountList(), manager.getGameList(), manager.getGameCollection()) == true) {
+                // replace old files with new data files
+            }
     }
 
     public static class TextInterpreter{
@@ -230,6 +226,76 @@ public class Backend {
 
         public ArrayList<String> getTransactionList(){
             return this.TransactionList;
+        }
+    }
+
+    // class to print and create text files for our database
+    public class  TextFilePrinter {
+        // create and write into a temp txt file
+        public static boolean createFiles(HashMap<String, String[]> accountList, HashMap<String, String[]> gameList, ArrayList<String> gameCollection) {
+            File newAccountFile = new File("data\\newAccountList.txt");
+            File newGamesListFile = new File("data\\newGamesList.txt");
+            File newGamesCollectionFile = new File("data\\newGamesCollection.txt");
+
+            // accounts list writer
+            try {
+                BufferedWriter accountWriter = new BufferedWriter(new FileWriter(newAccountFile));
+
+                for (String key : accountList.keySet()) {
+                    String line = key;
+                    line += String.valueOf(" ").repeat(16-key.length());
+                    line += accountList.get(key)[0] + " " + accountList.get(key)[1];
+                    accountWriter.write(line);
+                    accountWriter.newLine();
+                }
+
+                accountWriter.write("END");
+                accountWriter.close();
+                
+            } catch (IOException e){
+                System.out.println("Error reading file");
+            }
+
+            // game list writer
+            try {
+                BufferedWriter gamewriter = new BufferedWriter(new FileWriter(newGamesListFile));
+
+                for (String key : gameList.keySet()) {
+                    String line = key;
+                    line += String.valueOf(" ").repeat(16-key.length());
+                    line += gameList.get(key)[0] + String.valueOf(" ").repeat(16-gameList.get(key)[0].length()) + gameList.get(key)[1];
+                    gamewriter.write(line);
+                    gamewriter.newLine();
+                }
+
+                gamewriter.write("END");
+                gamewriter.close();
+                
+            } catch (IOException e){
+                System.out.println("Error reading file");
+            }
+
+            // games collection writer
+            try {
+                BufferedWriter collectionWriter = new BufferedWriter(new FileWriter(newGamesCollectionFile));
+
+                for (String game : gameCollection) {
+                    collectionWriter.write(game);
+                    collectionWriter.newLine();
+                }
+
+                collectionWriter.write("END");
+                collectionWriter.close();
+                
+            } catch (IOException e){
+                System.out.println("Error reading file");
+            }
+
+            if (newAccountFile.exists() && newGamesListFile.exists() && newGamesCollectionFile.exists()) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }
