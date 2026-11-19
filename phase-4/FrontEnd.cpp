@@ -237,7 +237,7 @@ void FrontEnd::handleCreate() {
     string name;
     string typeName;
     if (!promptForInput("Enter new username: ", name)) return;
-    if (!promptForInput("Enter account type (admin, full-standard, buy-standard, sell-standard): ", typeName)) {
+    if (!promptForInput("Enter account type (admin, full-standard, buy-standard, sell-standard, account-manager): ", typeName)) {
         return;
     }
     name = trim(name);
