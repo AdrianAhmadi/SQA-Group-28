@@ -75,11 +75,6 @@ void Admin::processRefund(string buyer, string seller, double amount, string acc
     ifstream instream;
     ofstream outstream;
 
-    if (amount <= 0){
-        cout << "Amount must be positive" << endl;
-        return;
-    }
-
     bool first = true;
     bool foundBuyer = false;
     bool foundSeller = false;
@@ -112,7 +107,6 @@ void Admin::processRefund(string buyer, string seller, double amount, string acc
             if (stod(row[2]) <= (999999.99 - amount)){
                 foundBuyer = true;
             } else {
-                cout << "Buyer would exceed fund limit" << endl;
                 return;
             }
         }
@@ -120,7 +114,7 @@ void Admin::processRefund(string buyer, string seller, double amount, string acc
             if (stod(row[2]) > amount){
                 foundSeller = true;
             } else {
-                cout << "Seller has insufficient funds" << endl;
+                //cout << "Error: Seller has insufficient funds to process this refund." << endl;
                 return;
             }
             continue;
@@ -178,8 +172,6 @@ void Admin::processRefund(string buyer, string seller, double amount, string acc
             outstream << row[0] << '_' << row[1] << '_' << row[2];
             first = false;
         }
-    } else {
-        cout << "Users not found" << endl;
     }
     instream.close();
     outstream.close();
@@ -206,8 +198,23 @@ void Admin::OutputAccountList(string accounts) {
     }
 }
 
+void Admin::OutputGameList() {
+    ifstream instream;
+    instream.open(".\\data\\availablegames.txt");
+    if (!instream.is_open()){
+        cerr << "Error: Could not open account file." << endl;
+        return;
+    }
+    
+    string line;
+
+    while(getline(instream, line)){
+        cout << line << endl;
+    }
+}
+
 void Admin::deleteUser(string username, string accounts) {
-    string tempfile = "./data/temp.txt";
+    string tempfile = ".\\data\\temp.txt";
     ifstream instream;
     ofstream outstream;
 
@@ -252,7 +259,7 @@ void Admin::deleteUser(string username, string accounts) {
     outstream.close();
 
     if (found == false){
-        cout << "User not found" << endl;
+        //cout << "No such user found." << endl;
         remove(tempfile.c_str());
         return;
     }
@@ -260,7 +267,7 @@ void Admin::deleteUser(string username, string accounts) {
     rename(tempfile.c_str(), accounts.c_str());
 }
 
-void Admin::addCredit(string username, double credit, string accounts){
+void Admin::addCredit(string username, double credit, string accounts) {
     string tempfile = ".\\data\\temp.txt";
     ifstream instream;
     ofstream outstream;

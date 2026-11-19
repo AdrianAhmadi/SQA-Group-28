@@ -1,14 +1,11 @@
 #include "User.h"
 #include <iostream>
 #include <fstream>
-<<<<<<< HEAD
 #include <sstream>
 #include <string>
 #include <cstdio>
 #include <iomanip>
 #include <vector>
-=======
->>>>>>> origin/phase-3-Denis
 using namespace std;
 
 void User::addCredit(float credit, string accounts) {
